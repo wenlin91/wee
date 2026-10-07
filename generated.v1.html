@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AI 主页 — Sunlit Tree（改进版）</title>
+  <style>:root{--tree-green:#0b8457;--bg-light:#E8F8F0;--fg:#0b2b22;--muted:#4b5563;--accent:var(--tree-green);--card:rgba(255,255,255,0.85);--font-sans:'Microsoft Yahei','微软雅黑',Arial,sans-serif}*{box-sizing:border-box;margin:0;padding:0}html,body{height:100%}body{font-family:var(--font-sans);background:linear-gradient(180deg,#e8fbeb 0%,#daf6e0 100%);color:var(--fg);-webkit-font-smoothing:antialiased;overflow:hidden}.page-pad{padding-left:6.25%;padding-right:6.25%}header.site-header{position:fixed;left:6.25%;right:6.25%;top:0;height:6.25rem;display:flex;flex-direction:column;z-index:50}.top-row{display:flex;align-items:center;justify-content:space-between;height:1.2rem;padding-top:0.8rem}.top-spacer{height:1rem}.logo{display:flex;align-items:center;gap:0.5rem}.logo img{height:88px;width:auto;border-radius:6px;transform:translateY(1rem);transition:transform .15s ease}nav.top-nav{display:flex;gap:calc(1.25rem + 3ch);align-items:center;transform:translateX(-10ch);transition:transform .15s ease}.nav-item{font-size:18px;color:var(--muted);font-weight:600;text-decoration:none}.banner{display:flex;align-items:center;justify-content:center;height:3rem}.slogan{font-family:var(--font-sans);font-size:28px;color:#c71a1a;font-weight:800;transform:translate(8ch,2rem);transition:transform .15s ease}.banner-gap{height:1rem}.main{display:flex;margin-top:6.25rem}.sidebar{width:20%;min-width:180px;padding-top:0.75rem;position:fixed;top:6.25rem;left:6.25%;bottom:0}.sidebar .section-title{color:#c71a1a;font-weight:700;margin-bottom:0.6rem}.sidebar .sidebar-item{display:block;padding:0.6rem 0.75rem;color:var(--muted);font-size:16px;border-radius:8px;cursor:pointer;background:transparent;border:none;text-align:left}.sidebar .sidebar-item.red{color:#c71a1a}.sidebar .sidebar-item.active{color:var(--accent);background:rgba(11,132,87,0.06)}.sidebar .sidebar-item[data-category="chat"]{margin-top:4rem}.content-wrap{margin-left:calc(6.25% + 20%);width:calc(73.75% - 12px);padding:1rem 0}.scroll-container{position:absolute;top:calc(6.25rem + 2rem);left:calc(6.25% + 20%);right:6.25%;bottom:0;overflow-y:auto;padding:1rem 2ch 1rem 0}.sticky-top{position:sticky;top:6.25rem;background:transparent;padding:0.5rem 0;color:#c71a1a;font-weight:700}.categories-row{position:fixed;top:calc(6.25rem + 1rem);left:6.25%;right:6.25%;height:3rem;display:flex;align-items:center;justify-content:center;padding:0 1rem;color:#c71a1a;font-weight:700;z-index:46;background:rgba(255,255,255,0.85);backdrop-filter:blur(6px);border-bottom:1px solid rgba(0,0,0,0.05)}.categories-row .categories-center{font-family:var(--font-sans);font-size:18px;color:#c71a1a;font-weight:700;transform:translateX(2ch);transition:transform .12s ease}.categories-spacer{height:3rem}.sidebar-title{font-family:var(--font-sans);font-size:16px;color:#c71a1a;font-weight:700;padding:0.5rem 0}#content-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem}.card{background:var(--card);border-radius:12px;overflow:hidden;box-shadow:0 6px 18px rgba(0,0,0,0.06);transition:transform .2s}.card:hover{transform:translateY(-6px)}.card img{width:100%;height:60px;object-fit:cover}.card .meta{padding:0.75rem}.grid-spacer{grid-column:1 / -1;height:32px;visibility:hidden}footer.site-footer{text-align:center;padding:2.5rem 0;color:var(--muted);margin-top:2rem}@media (max-width:1024px){.sidebar{position:relative;top:auto;left:auto;width:100%;min-width:0}.content-wrap{margin-left:0;width:100%}.page-pad{padding-left:1rem;padding-right:1rem}}</style>
+  <style>
+  .life-section-title,.health-section-title,.work-section-title,.pro-section-title,.campus-section-title{margin:1.5rem 0 1rem;font-family:'Microsoft Yahei','微软雅黑',Arial,sans-serif;font-size:18px;font-weight:700;color:#c71a1a;text-align:center}
+  #life-grid,#health-grid,#video-grid,#audio-grid,#programming-grid,#image-grid,#work-grid,#pro-grid,#design-grid,#campus-grid,#agent-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.65rem}
+  #life-grid,#health-grid,#video-grid,#audio-grid,#programming-grid,#image-grid,#work-grid,#pro-grid,#design-grid,#campus-grid{grid-template-rows:repeat(2,minmax(120px,auto))}
+  #agent-grid{grid-template-rows:repeat(3,minmax(120px,auto))}
+  .life-card,.work-card,.campus-card{display:flex;min-width:0;flex-direction:column;align-items:center;justify-content:center;padding:.5rem;background:#fff;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,.06);text-decoration:none;color:var(--fg);transition:transform .2s}
+  .life-card:hover,.work-card:hover,.campus-card:hover{transform:translateY(-4px)}
+  .life-card img,.work-card img,.campus-card img{display:block;width:100%;height:110px;object-fit:contain}
+  .life-card span,.work-card span,.campus-card span{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding-top:.35rem;font-size:14px}
+  @media(max-width:700px){
+    #life-grid,#health-grid,#video-grid,#audio-grid,#programming-grid,#image-grid,#work-grid,#pro-grid,#design-grid,#campus-grid,#agent-grid{gap:.35rem}
+    .life-card,.work-card,.campus-card{padding:.25rem}
+    .life-card img,.work-card img,.campus-card img{height:75px}
+    .life-card span,.work-card span,.campus-card span{font-size:11px}
+  }
+  .after-audio-toggle{display:block;margin:1.25rem auto;padding:.5rem 1rem;border:0;border-radius:8px;background:var(--accent);color:#fff;font:inherit;cursor:pointer}
+  .after-audio-toggle:hover{filter:brightness(.92)}
+  #after-audio-sections[hidden]{display:none}
+  .categories-row{top:calc(6.25rem + .75rem + 3rem);left:calc(6.25% + 20%);right:6.25%;height:2.4rem}
+  .categories-row .categories-center{transform:none}
+  .scroll-container{top:calc(6.25rem + .75rem + 3rem + 2.4rem)}
+  #content-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));grid-template-rows:repeat(3,minmax(130px,auto));gap:.65rem;margin-bottom:1rem}
+  #content-grid .card{display:flex;min-width:0;flex-direction:column;align-items:center;justify-content:center;padding:.4rem;background:#fff;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,.06);text-decoration:none;color:var(--fg);transition:transform .2s}
+  #content-grid .card:hover{transform:translateY(-4px)}
+  #content-grid .card img{display:block;width:100%;height:110px;object-fit:contain}
+  #content-grid .card .meta{width:100%;padding:.35rem .2rem 0;text-align:center;overflow:hidden}
+  #content-grid .card .meta h3{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  @media(max-width:700px){#content-grid{gap:.35rem;grid-template-rows:repeat(3,minmax(100px,auto))}#content-grid .card{padding:.25rem}#content-grid .card img{height:75px}#content-grid .card .meta h3{font-size:11px}}
+  </style>
+  <link rel="stylesheet" href="assets/responsive.css">
+</head>
+<body class="page-pad">
+  <header class="site-header" role="banner">
+    <div class="top-spacer" aria-hidden="true"></div>
+    <div class="top-row">
+      <div class="logo"><img src="ok012_a.png" alt="Logo" onerror="this.src='https://picsum.photos/seed/logo/120/40'"/></div>
+      <nav class="top-nav" aria-label="主导航">
+        <a href="index.html" class="nav-item">Home</a>
+        <a href="blog-generator.html" class="nav-item">Blog</a>
+        <a href="prompt-generator.html" class="nav-item">Prompt</a>
+        <a href="life-generator.html" class="nav-item">Life</a>
+        <a href="generated.v1.html" class="nav-item">Commuty</a>
+        <a href="pages/Join%20%26%20Login.html" class="nav-item">Join &amp; Login</a>
+      </nav>
+    </div>
+    <div class="banner"><div class="slogan">Learn and Practice AI Skills !</div></div>
+  </header>
+
+  <main class="main" role="main">
+    <aside id="sidebar" class="sidebar" aria-label="侧边栏">
+      <button class="sidebar-item" data-category="chat" data-target="life-title">Life   AI</button>
+      <button class="sidebar-item" data-category="write" data-target="health-title">Health AI</button>
+      <button class="sidebar-item" data-category="office" data-target="work-title">Work   AI</button>
+      <button class="sidebar-item" data-category="image" data-target="campus-title">Campus AI</button>
+      <button class="sidebar-item" data-category="video" data-target="image-title">Image  AI</button>
+      <button class="sidebar-item" data-category="audio" data-target="video-title">Video  AI</button>
+      <button class="sidebar-item" data-category="design" data-target="audio-title">Audio  AI</button>
+      <button class="sidebar-item" type="button">Prompt</button>
+      <div style="margin-top: 2em; margin-left: 0.75rem; color: #2d6a4f; font-family: 'Times New Roman', serif; font-size: 18px; font-weight: 700;">Textbook Updates</div>
+    </aside>
+
+    <section class="content-wrap">
+      <div class="categories-row" role="region" aria-label="分类标题">
+        <div class="categories-center">AI-Cummuty Links</div>
+      </div>
+      <div class="categories-spacer" aria-hidden="true"></div>
+      <div class="scroll-container">
+        <div class="blog-links" style="padding-top:1rem">
+          <a href="pages1/1.%20A%20Practical%20Discussion%20on%20AI-Driven%20Blogging.html" style="display:block;margin-bottom:1rem;color:inherit">1. A Practical Discussion on AI-Driven Blogging</a>
+          <a href="pages1/2.%20Getting%20Started%20with%20AI%20Prompt%20Skills.html" style="display:block;margin-bottom:1rem;color:inherit">2. Getting Started with AI Prompt Skills</a>
+          <a href="pages1/3.%20How%20can%20we%20make%20sure%20AI-written%20blogs%20are%20any%20good.html" style="display:block;margin-bottom:1rem;color:inherit">3. How can we make sure AI-written blogs are any good</a>
+          <a href="pages1/4.%20How%20to%20choose%20topics%20for%20AI-written%20blogs.html" style="display:block;margin-bottom:1rem;color:inherit">4. How to choose topics for AI-written blogs</a>
+          <a href="pages1/5.%20How%20to%20Choose%20Your%20Own%20AI%20Tools.html" style="display:block;margin-bottom:1rem;color:inherit">5. How to Choose Your Own AI Tools</a>
+          <a href="pages1/6.%20The%20New%20Evolution%20of%20Data,%20Information,%20and%20Knowledge%20in%20the%20AI%20Era.html" style="display:block;margin-bottom:1rem;color:inherit">6. The New Evolution of Data, Information, and Knowledge in the AI Era</a>
+          <a href="pages1/7.%20What%20AI%20will%20bring%20to%20our%20future.html" style="display:block;margin-bottom:1rem;color:inherit">7. What AI will bring to our future</a>
+          <a href="pages1/8.%20What%20impact%20does%20AI%20have%20on%20our%20lives.html" style="display:block;margin-bottom:1rem;color:inherit">8. What impact does AI have on our lives</a>
+          <a href="pages1/9.%20What%20insights%20does%20AI%20development%20give%20us.html" style="display:block;margin-bottom:1rem;color:inherit">9. What insights does AI development give us</a>
+        </div>
+
+        <!-- 保留底部 LOGO 区块及其后的说明、链接和页脚。 -->
+        <div style="text-align:center;margin-top:2rem">
+          <img src="ok012_a.png" alt="Logo" style="display:block;height:96px;border-radius:6px;margin:0 auto 0.5rem auto;" onerror="this.src='https://picsum.photos/seed/logo/120/40'">
+          <div style="margin-top:0.5rem;color:var(--muted)">Follow me, save me, and easily step into the AI era !</div>
+        </div>
+
+        <div style="height:2rem"></div>
+        <div style="display:flex;justify-content:center;gap:2rem;margin-top:1.5rem">
+          <a href="pages/Website%20collaboration.html" style="color:inherit">Website collaboration</a>
+          <a href="pages/About%20Us.html" style="color:inherit">About Us</a>
+          <a href="pages/Partners%20and%20Collaborators.html" style="color:inherit"> Partners and Collaborators</a>
+        </div>
+
+        <footer class="site-footer">
+          Copyright © 16/08/2026 AI &nbsp;&nbsp; Contact Us Email: udedv12@outlook.com
+        </footer>
+      </div>
+    </section>
+  </main>
+
+
+ <script>
+  function setupSidebar(){
+    const scrollContainer = document.querySelector('.scroll-container');
+    document.querySelectorAll('.sidebar-item').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.sidebar-item').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const target = document.getElementById(btn.dataset.target);
+        if (!target || !scrollContainer) return;
+
+        if (window.matchMedia('(max-width: 900px)').matches) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          return;
+        }
+
+        const containerStyle = getComputedStyle(scrollContainer);
+        const targetTop = target.getBoundingClientRect().top
+          - scrollContainer.getBoundingClientRect().top
+          + scrollContainer.scrollTop
+          - scrollContainer.clientTop
+          - parseFloat(containerStyle.paddingTop);
+        scrollContainer.scrollTo({ top: targetTop, behavior: 'smooth' });
+      });
+    });
+    const first = document.querySelector('.sidebar-item');
+    if (first) first.classList.add('active');
+  }
+
+  document.addEventListener('DOMContentLoaded', setupSidebar);
+</script>
+<a href="index.html" style="position:fixed;right:20px;bottom:20px;z-index:1000;padding:11px 16px;border-radius:999px;background:#0b8457;color:#fff;font-weight:700;text-decoration:none;box-shadow:0 6px 18px #18332a30">Back to home</a>
+</body>
+</html>

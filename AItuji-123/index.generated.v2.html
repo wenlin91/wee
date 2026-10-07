@@ -1,0 +1,689 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AI 主页 — Sunlit Tree（改进版）</title>
+  <style>:root{--tree-green:#0b8457;--bg-light:#E8F8F0;--fg:#0b2b22;--muted:#4b5563;--accent:var(--tree-green);--card:rgba(255,255,255,0.85);--font-sans:'Microsoft Yahei','微软雅黑',Arial,sans-serif}*{box-sizing:border-box;margin:0;padding:0}html,body{height:100%}body{font-family:var(--font-sans);background:linear-gradient(180deg,#e8fbeb 0%,#daf6e0 100%);color:var(--fg);-webkit-font-smoothing:antialiased;overflow:hidden}.page-pad{padding-left:6.25%;padding-right:6.25%}header.site-header{position:fixed;left:6.25%;right:6.25%;top:0;height:6.25rem;display:flex;flex-direction:column;z-index:50}.top-row{display:flex;align-items:center;justify-content:space-between;height:1.2rem;padding-top:0.8rem}.top-spacer{height:1rem}.logo{display:flex;align-items:center;gap:0.5rem}.logo img{height:88px;width:auto;border-radius:6px;transform:translateY(1rem);transition:transform .15s ease}nav.top-nav{display:flex;gap:calc(1.25rem + 3ch);align-items:center;transform:translateX(-10ch);transition:transform .15s ease}.nav-item{font-size:18px;color:var(--muted);font-weight:600;text-decoration:none}.banner{display:flex;align-items:center;justify-content:center;height:3rem}.slogan{font-family:var(--font-sans);font-size:28px;color:#c71a1a;font-weight:800;transform:translate(8ch,2rem);transition:transform .15s ease}.banner-gap{height:1rem}.main{display:flex;margin-top:6.25rem}.sidebar{width:20%;min-width:180px;padding-top:0.75rem;position:fixed;top:6.25rem;left:6.25%;bottom:0}.sidebar .section-title{color:#c71a1a;font-weight:700;margin-bottom:0.6rem}.sidebar .sidebar-item{display:block;padding:0.6rem 0.75rem;color:var(--muted);font-size:16px;border-radius:8px;cursor:pointer;background:transparent;border:none;text-align:left}.sidebar .sidebar-item.red{color:#c71a1a}.sidebar .sidebar-item.active{color:var(--accent);background:rgba(11,132,87,0.06)}.sidebar .sidebar-item[data-category="chat"]{margin-top:4rem}.content-wrap{margin-left:calc(6.25% + 20%);width:calc(73.75% - 12px);padding:1rem 0}.scroll-container{position:absolute;top:calc(6.25rem + 2rem);left:calc(6.25% + 20%);right:6.25%;bottom:0;overflow-y:auto;padding:1rem 2ch 1rem 0}.sticky-top{position:sticky;top:6.25rem;background:transparent;padding:0.5rem 0;color:#c71a1a;font-weight:700}.categories-row{position:fixed;top:calc(6.25rem + 1rem);left:6.25%;right:6.25%;height:3rem;display:flex;align-items:center;justify-content:center;padding:0 1rem;color:#c71a1a;font-weight:700;z-index:46;background:rgba(255,255,255,0.85);backdrop-filter:blur(6px);border-bottom:1px solid rgba(0,0,0,0.05)}.categories-row .categories-center{font-family:var(--font-sans);font-size:18px;color:#c71a1a;font-weight:700;transform:translateX(2ch);transition:transform .12s ease}.categories-spacer{height:3rem}.sidebar-title{font-family:var(--font-sans);font-size:16px;color:#c71a1a;font-weight:700;padding:0.5rem 0}#content-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem}.card{background:var(--card);border-radius:12px;overflow:hidden;box-shadow:0 6px 18px rgba(0,0,0,0.06);transition:transform .2s}.card:hover{transform:translateY(-6px)}.card img{width:100%;height:60px;object-fit:cover}.card .meta{padding:0.75rem}.grid-spacer{grid-column:1 / -1;height:32px;visibility:hidden}footer.site-footer{text-align:center;padding:2.5rem 0;color:var(--muted);margin-top:2rem}@media (max-width:1024px){.sidebar{position:relative;top:auto;left:auto;width:100%;min-width:0}.content-wrap{margin-left:0;width:100%}.page-pad{padding-left:1rem;padding-right:1rem}}</style>
+  <style>
+  .life-section-title,.health-section-title,.work-section-title,.pro-section-title,.campus-section-title{margin:1.5rem 0 1rem;font-family:'Microsoft Yahei','微软雅黑',Arial,sans-serif;font-size:18px;font-weight:700;color:#c71a1a;text-align:center}
+  #life-grid,#health-grid,#video-grid,#audio-grid,#programming-grid,#image-grid,#work-grid,#pro-grid,#design-grid,#campus-grid,#agent-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.65rem}
+  #life-grid,#health-grid,#video-grid,#audio-grid,#programming-grid,#image-grid,#work-grid,#pro-grid,#design-grid,#campus-grid{grid-template-rows:repeat(2,minmax(120px,auto))}
+  #agent-grid{grid-template-rows:repeat(3,minmax(120px,auto))}
+  .life-card,.work-card,.campus-card{display:flex;min-width:0;flex-direction:column;align-items:center;justify-content:center;padding:.5rem;background:#fff;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,.06);text-decoration:none;color:var(--fg);transition:transform .2s}
+  .life-card:hover,.work-card:hover,.campus-card:hover{transform:translateY(-4px)}
+  .life-card img,.work-card img,.campus-card img{display:block;width:100%;height:110px;object-fit:contain}
+  .life-card span,.work-card span,.campus-card span{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding-top:.35rem;font-size:14px}
+  @media(max-width:700px){
+    #life-grid,#health-grid,#video-grid,#audio-grid,#programming-grid,#image-grid,#work-grid,#pro-grid,#design-grid,#campus-grid,#agent-grid{gap:.35rem}
+    .life-card,.work-card,.campus-card{padding:.25rem}
+    .life-card img,.work-card img,.campus-card img{height:75px}
+    .life-card span,.work-card span,.campus-card span{font-size:11px}
+  }
+  .after-audio-toggle{display:block;margin:1.25rem auto;padding:.5rem 1rem;border:0;border-radius:8px;background:var(--accent);color:#fff;font:inherit;cursor:pointer}
+  .after-audio-toggle:hover{filter:brightness(.92)}
+  #after-audio-sections[hidden]{display:none}
+  .categories-row{top:calc(6.25rem + .75rem + 4rem);left:calc(6.25% + 20%);right:6.25%;height:2.4rem}
+  .categories-row .categories-center{transform:none}
+  .scroll-container{top:calc(6.25rem + .75rem + 4rem + 2.4rem)}
+  #content-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));grid-template-rows:repeat(3,minmax(130px,auto));gap:.65rem;margin-bottom:1rem}
+  #content-grid .card{display:flex;min-width:0;flex-direction:column;align-items:center;justify-content:center;padding:.4rem;background:#fff;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,.06);text-decoration:none;color:var(--fg);transition:transform .2s}
+  #content-grid .card:hover{transform:translateY(-4px)}
+  #content-grid .card img{display:block;width:100%;height:110px;object-fit:contain}
+  #content-grid .card .meta{width:100%;padding:.35rem .2rem 0;text-align:center;overflow:hidden}
+  #content-grid .card .meta h3{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  @media(max-width:700px){#content-grid{gap:.35rem;grid-template-rows:repeat(3,minmax(100px,auto))}#content-grid .card{padding:.25rem}#content-grid .card img{height:75px}#content-grid .card .meta h3{font-size:11px}}
+  </style>
+</head>
+<body class="page-pad">
+  <header class="site-header" role="banner">
+    <div class="top-spacer" aria-hidden="true"></div>
+    <div class="top-row">
+      <div class="logo"><img src="ok012_a.png" alt="Logo" onerror="this.src='https://picsum.photos/seed/logo/120/40'"/></div>
+      <nav class="top-nav" aria-label="主导航">
+        <a href="../index.html" class="nav-item">Home</a>
+        <a href="#" class="nav-item">Blog</a>
+        <a href="#" class="nav-item">Prompt</a>
+        <a href="#" class="nav-item">Life</a>
+        <a href="#" class="nav-item">Commuty</a>
+        <a href="#" class="nav-item">Join & Login</a>
+      </nav>
+    </div>
+    <div class="banner"><div class="slogan">Learn and Practice AI Skills !</div></div>
+    <div class="banner-gap" aria-hidden="true"></div>
+  </header>
+
+  <main class="main" role="main">
+    <aside id="sidebar" class="sidebar" aria-label="侧边栏">
+      <button class="sidebar-item" data-category="chat" data-target="life-title">Life   AI</button>
+      <button class="sidebar-item" data-category="write" data-target="health-title">Health AI</button>
+      <button class="sidebar-item" data-category="office" data-target="work-title">Work   AI</button>
+      <button class="sidebar-item" data-category="image" data-target="campus-title">Campus AI</button>
+      <button class="sidebar-item" data-category="video" data-target="image-title">Image  AI</button>
+      <button class="sidebar-item" data-category="audio" data-target="video-title">Video  AI</button>
+      <button class="sidebar-item" data-category="design" data-target="audio-title">Audio  AI</button>
+    </aside>
+
+    <section class="content-wrap">
+      <div class="categories-row" role="region" aria-label="分类标题">
+        <div class="categories-center">AI-Category Links</div>
+      </div>
+      <div class="categories-spacer" aria-hidden="true"></div>
+      <div class="scroll-container">
+        <div id="content-grid" aria-label="AI-Category Links"></div>
+        <h2 id="life-title" class="life-section-title">Life is sorted by AI</h2>
+        <div id="life-grid" aria-label="Life AI links">
+          <a class="life-card" href="https://app.karpo.ai" target="_blank" rel="noopener noreferrer" aria-label="app.karpo.ai">
+            <img src="aituji-life/app.karpo.ai.jpeg" alt="app.karpo.ai">
+            <span>app.karpo.ai</span>
+          </a>
+          <a class="life-card" href="https://elsaspeak.com" target="_blank" rel="noopener noreferrer" aria-label="elsaspeak.com">
+            <img src="aituji-life/elsaspeak.com.jpeg" alt="elsaspeak.com">
+            <span>elsaspeak.com</span>
+          </a>
+          <a class="life-card" href="https://flash.co" target="_blank" rel="noopener noreferrer" aria-label="flash.co">
+            <img src="aituji-life/flash.co.jpeg" alt="flash.co">
+            <span>flash.co</span>
+          </a>
+          <a class="life-card" href="https://kindroid.ai" target="_blank" rel="noopener noreferrer" aria-label="kindroid.ai">
+            <img src="aituji-life/kindroid.ai.jpeg" alt="kindroid.ai">
+            <span>kindroid.ai</span>
+          </a>
+          <a class="life-card" href="https://pi.ai" target="_blank" rel="noopener noreferrer" aria-label="pi.ai">
+            <img src="aituji-life/pi.ai.jpeg" alt="pi.ai">
+            <span>pi.ai</span>
+          </a>
+          <a class="life-card" href="https://replika.com" target="_blank" rel="noopener noreferrer" aria-label="replika.com">
+            <img src="aituji-life/replika.com.jpeg" alt="replika.com">
+            <span>replika.com</span>
+          </a>
+          <a class="life-card" href="https://sleepcycle.com" target="_blank" rel="noopener noreferrer" aria-label="sleepcycle.com">
+            <img src="aituji-life/sleepcycle.com.jpeg" alt="sleepcycle.com">
+            <span>sleepcycle.com</span>
+          </a>
+          <a class="life-card" href="https://thefabulous.co" target="_blank" rel="noopener noreferrer" aria-label="thefabulous.co">
+            <img src="aituji-life/thefabulous.co.jpeg" alt="thefabulous.co">
+            <span>thefabulous.co</span>
+          </a>
+          <a class="life-card" href="https://wanderboat.ai" target="_blank" rel="noopener noreferrer" aria-label="wanderboat.ai">
+            <img src="aituji-life/wanderboat.ai.jpeg" alt="wanderboat.ai">
+            <span>wanderboat.ai</span>
+          </a>
+          <a class="life-card" href="https://youper.ai" target="_blank" rel="noopener noreferrer" aria-label="youper.ai">
+            <img src="aituji-life/youper.ai.jpeg" alt="youper.ai">
+            <span>youper.ai</span>
+          </a>
+        </div>
+
+        <h2 id="health-title" class="health-section-title">Health is sorted by AI</h2>
+        <div id="health-grid" aria-label="Health AI links">
+          <a class="life-card" href="https://ada.com" target="_blank" rel="noopener noreferrer" aria-label="ada.com">
+            <img src="AItuji-Health/ada.com.jpeg" alt="ada.com">
+            <span>ada.com</span>
+          </a>
+          <a class="life-card" href="https://doctronic.com" target="_blank" rel="noopener noreferrer" aria-label="doctronic.com">
+            <img src="AItuji-Health/doctronic.com.jpeg" alt="doctronic.com">
+            <span>doctronic.com</span>
+          </a>
+          <a class="life-card" href="https://docus.ai" target="_blank" rel="noopener noreferrer" aria-label="docus.ai">
+            <img src="AItuji-Health/docus.ai.jpeg" alt="docus.ai">
+            <span>docus.ai</span>
+          </a>
+          <a class="life-card" href="https://exscientia.ai" target="_blank" rel="noopener noreferrer" aria-label="exscientia.ai">
+            <img src="AItuji-Health/exscientia.ai.jpeg" alt="exscientia.ai">
+            <span>exscientia.ai</span>
+          </a>
+          <a class="life-card" href="https://healthtap.com" target="_blank" rel="noopener noreferrer" aria-label="healthtap.com">
+            <img src="AItuji-Health/healthtap.com.jpeg" alt="healthtap.com">
+            <span>healthtap.com</span>
+          </a>
+          <a class="life-card" href="https://healz.ai" target="_blank" rel="noopener noreferrer" aria-label="healz.ai">
+            <img src="AItuji-Health/healz.ai.jpeg" alt="healz.ai">
+            <span>healz.ai</span>
+          </a>
+          <a class="life-card" href="https://khealth.com" target="_blank" rel="noopener noreferrer" aria-label="khealth.com">
+            <img src="AItuji-Health/khealth.com.jpeg" alt="khealth.com">
+            <span>khealth.com</span>
+          </a>
+          <a class="life-card" href="https://lunit.io" target="_blank" rel="noopener noreferrer" aria-label="lunit.io">
+            <img src="AItuji-Health/lunit.io.jpeg" alt="lunit.io">
+            <span>lunit.io</span>
+          </a>
+          <a class="life-card" href="https://mediktor.com" target="_blank" rel="noopener noreferrer" aria-label="mediktor.com">
+            <img src="AItuji-Health/mediktor.com.jpeg" alt="mediktor.com">
+            <span>mediktor.com</span>
+          </a>
+          <a class="life-card" href="https://suki.ai" target="_blank" rel="noopener noreferrer" aria-label="suki.ai">
+            <img src="AItuji-Health/suki.ai.jpeg" alt="suki.ai">
+            <span>suki.ai</span>
+          </a>
+        </div>
+
+        <h2 id="campus-title" class="campus-section-title">Campus is sorted by AI</h2>
+        <div id="campus-grid" aria-label="Campus AI links">
+          <a class="campus-card" href="https://century.tech" target="_blank" rel="noopener noreferrer" aria-label="century.tech">
+            <img src="AItuji-campus/century.tech.jpeg" alt="century.tech">
+            <span>century.tech</span>
+          </a>
+          <a class="campus-card" href="https://coursera.org" target="_blank" rel="noopener noreferrer" aria-label="coursera.org">
+            <img src="AItuji-campus/coursera.org.jpeg" alt="coursera.org">
+            <span>coursera.org</span>
+          </a>
+          <a class="campus-card" href="https://duolingo.com" target="_blank" rel="noopener noreferrer" aria-label="duolingo.com">
+            <img src="AItuji-campus/duolingo.com.jpeg" alt="duolingo.com">
+            <span>duolingo.com</span>
+          </a>
+          <a class="campus-card" href="https://edu.google.com" target="_blank" rel="noopener noreferrer" aria-label="edu.google.com">
+            <img src="AItuji-campus/edu.google.com.jpeg" alt="edu.google.com">
+            <span>edu.google.com</span>
+          </a>
+          <a class="campus-card" href="https://iflytek.com" target="_blank" rel="noopener noreferrer" aria-label="iflytek.com">
+            <img src="AItuji-campus/iflytek.com.jpeg" alt="iflytek.com">
+            <span>iflytek.com</span>
+          </a>
+          <a class="campus-card" href="https://khanacademy.org" target="_blank" rel="noopener noreferrer" aria-label="khanacademy.org">
+            <img src="AItuji-campus/khanacademy.org.jpeg" alt="khanacademy.org">
+            <span>khanacademy.org</span>
+          </a>
+          <a class="campus-card" href="https://magicschool.ai" target="_blank" rel="noopener noreferrer" aria-label="magicschool.ai">
+            <img src="AItuji-campus/magicschool.ai.jpeg" alt="magicschool.ai">
+            <span>magicschool.ai</span>
+          </a>
+          <a class="campus-card" href="https://quizlet.com" target="_blank" rel="noopener noreferrer" aria-label="quizlet.com">
+            <img src="AItuji-campus/quizlet.com.jpeg" alt="quizlet.com">
+            <span>quizlet.com</span>
+          </a>
+          <a class="campus-card" href="https://schoolai.com" target="_blank" rel="noopener noreferrer" aria-label="schoolai.com">
+            <img src="AItuji-campus/schoolai.com.jpeg" alt="schoolai.com">
+            <span>schoolai.com</span>
+          </a>
+          <a class="campus-card" href="https://squirrelai.com" target="_blank" rel="noopener noreferrer" aria-label="squirrelai.com">
+            <img src="AItuji-campus/squirrelai.com.jpeg" alt="squirrelai.com">
+            <span>squirrelai.com</span>
+          </a>
+        </div>
+
+        <h2 id="work-title" class="work-section-title">Work is sorted by AI</h2>
+        <div id="work-grid" aria-label="Work AI links">
+          <a class="work-card" href="https://chatgpt.com" target="_blank" rel="noopener noreferrer" aria-label="chatgpt.com">
+            <img src="AItuji-work/chatgpt.com.jpeg" alt="chatgpt.com">
+            <span>chatgpt.com</span>
+          </a>
+          <a class="work-card" href="https://claude.ai" target="_blank" rel="noopener noreferrer" aria-label="claude.ai">
+            <img src="AItuji-work/claude.ai.jpeg" alt="claude.ai">
+            <span>claude.ai</span>
+          </a>
+          <a class="work-card" href="https://clickup.com" target="_blank" rel="noopener noreferrer" aria-label="clickup.com">
+            <img src="AItuji-work/clickup.com.jpeg" alt="clickup.com">
+            <span>clickup.com</span>
+          </a>
+          <a class="work-card" href="https://deepl.com" target="_blank" rel="noopener noreferrer" aria-label="deepl.com">
+            <img src="AItuji-work/deepl.com.jpeg" alt="deepl.com">
+            <span>deepl.com</span>
+          </a>
+          <a class="work-card" href="https://gemini.google.com" target="_blank" rel="noopener noreferrer" aria-label="gemini.google.com">
+            <img src="AItuji-work/gemini.google.com.jpeg" alt="gemini.google.com">
+            <span>gemini.google.com</span>
+          </a>
+          <a class="work-card" href="https://github.com" target="_blank" rel="noopener noreferrer" aria-label="github.com">
+            <img src="AItuji-work/github.com.jpeg" alt="github.com">
+            <span>github.com</span>
+          </a>
+          <a class="work-card" href="https://notion.so" target="_blank" rel="noopener noreferrer" aria-label="notion.so">
+            <img src="AItuji-work/notion.so.jpeg" alt="notion.so">
+            <span>notion.so</span>
+          </a>
+          <a class="work-card" href="https://otter.ai" target="_blank" rel="noopener noreferrer" aria-label="otter.ai">
+            <img src="AItuji-work/otter.ai.jpeg" alt="otter.ai">
+            <span>otter.ai</span>
+          </a>
+          <a class="work-card" href="https://slack.com" target="_blank" rel="noopener noreferrer" aria-label="slack.com">
+            <img src="AItuji-work/slack.com.jpeg" alt="slack.com">
+            <span>slack.com</span>
+          </a>
+          <a class="work-card" href="https://zapier.com" target="_blank" rel="noopener noreferrer" aria-label="zapier.com">
+            <img src="AItuji-work/zapier.com.jpeg" alt="zapier.com">
+            <span>zapier.com</span>
+          </a>
+        </div>
+
+        <h2 class="pro-section-title">Pro-applications is sorted by AI</h2>
+        <div id="pro-grid" aria-label="Pro applications links">
+          <a class="work-card" href="https://abridge.com" target="_blank" rel="noopener noreferrer" aria-label="abridge.com">
+            <img src="AItuji-pro/abridge.com.jpeg" alt="abridge.com">
+            <span>abridge.com</span>
+          </a>
+          <a class="work-card" href="https://eliseai.com" target="_blank" rel="noopener noreferrer" aria-label="eliseai.com">
+            <img src="AItuji-pro/eliseai.com.jpeg" alt="eliseai.com">
+            <span>eliseai.com</span>
+          </a>
+          <a class="work-card" href="https://harvey.ai" target="_blank" rel="noopener noreferrer" aria-label="harvey.ai">
+            <img src="AItuji-pro/harvey.ai.jpeg" alt="harvey.ai">
+            <span>harvey.ai</span>
+          </a>
+          <a class="work-card" href="https://ironclad.com" target="_blank" rel="noopener noreferrer" aria-label="ironclad.com">
+            <img src="AItuji-pro/ironclad.com.jpeg" alt="ironclad.com">
+            <span>ironclad.com</span>
+          </a>
+          <a class="work-card" href="https://luminance.com" target="_blank" rel="noopener noreferrer" aria-label="luminance.com">
+            <img src="AItuji-pro/luminance.com.jpeg" alt="luminance.com">
+            <span>luminance.com</span>
+          </a>
+          <a class="work-card" href="https://numeric.io" target="_blank" rel="noopener noreferrer" aria-label="numeric.io">
+            <img src="AItuji-pro/numeric.io.jpeg" alt="numeric.io">
+            <span>numeric.io</span>
+          </a>
+          <a class="work-card" href="https://procore.com" target="_blank" rel="noopener noreferrer" aria-label="procore.com">
+            <img src="AItuji-pro/procore.com.jpeg" alt="procore.com">
+            <span>procore.com</span>
+          </a>
+          <a class="work-card" href="https://suki.ai" target="_blank" rel="noopener noreferrer" aria-label="suki.ai">
+            <img src="AItuji-pro/suki.ai.jpeg" alt="suki.ai">
+            <span>suki.ai</span>
+          </a>
+          <a class="work-card" href="https://veeva.com" target="_blank" rel="noopener noreferrer" aria-label="veeva.com">
+            <img src="AItuji-pro/vee%20va.com.jpeg" alt="veeva.com">
+            <span>veeva.com</span>
+          </a>
+          <a class="work-card" href="https://viz.ai" target="_blank" rel="noopener noreferrer" aria-label="viz.ai">
+            <img src="AItuji-pro/viz.ai.jpeg" alt="viz.ai">
+            <span>viz.ai</span>
+          </a>
+        </div>
+
+        <h2 class="life-section-title">Design is sorted by AI</h2>
+        <div id="design-grid" aria-label="Design AI links">
+          <a class="work-card" href="https://canva.com" target="_blank" rel="noopener noreferrer" aria-label="canva.com">
+            <img src="AItuji-design/canva.com.jpeg" alt="canva.com">
+            <span>canva.com</span>
+          </a>
+          <a class="work-card" href="https://capcut.com" target="_blank" rel="noopener noreferrer" aria-label="capcut.com">
+            <img src="AItuji-design/capcut.com.jpeg" alt="capcut.com">
+            <span>capcut.com</span>
+          </a>
+          <a class="work-card" href="https://figma.com" target="_blank" rel="noopener noreferrer" aria-label="figma.com">
+            <img src="AItuji-design/figma.com.jpeg" alt="figma.com">
+            <span>figma.com</span>
+          </a>
+          <a class="work-card" href="https://framer.com" target="_blank" rel="noopener noreferrer" aria-label="framer.com">
+            <img src="AItuji-design/framer.com.jpeg" alt="framer.com">
+            <span>framer.com</span>
+          </a>
+          <a class="work-card" href="https://kittl.com" target="_blank" rel="noopener noreferrer" aria-label="kittl.com">
+            <img src="AItuji-design/kittl.com.jpeg" alt="kittl.com">
+            <span>kittl.com</span>
+          </a>
+          <a class="work-card" href="https://looka.com" target="_blank" rel="noopener noreferrer" aria-label="looka.com">
+            <img src="AItuji-design/looka.com.jpeg" alt="looka.com">
+            <span>looka.com</span>
+          </a>
+          <a class="work-card" href="https://pixso.cn" target="_blank" rel="noopener noreferrer" aria-label="pixso.cn">
+            <img src="AItuji-design/pixso.cn.jpeg" alt="pixso.cn">
+            <span>pixso.cn</span>
+          </a>
+          <a class="work-card" href="https://remove.bg" target="_blank" rel="noopener noreferrer" aria-label="remove.bg">
+            <img src="AItuji-design/remove.bg.jpeg" alt="remove.bg">
+            <span>remove.bg</span>
+          </a>
+          <a class="work-card" href="https://tripo3d.ai" target="_blank" rel="noopener noreferrer" aria-label="tripo3d.ai">
+            <img src="AItuji-design/tripo3d.ai.jpeg" alt="tripo3d.ai">
+            <span>tripo3d.ai</span>
+          </a>
+          <a class="work-card" href="https://uizard.io" target="_blank" rel="noopener noreferrer" aria-label="uizard.io">
+            <img src="AItuji-design/uizard.io.jpeg" alt="uizard.io">
+            <span>uizard.io</span>
+          </a>
+        </div>
+
+        <h2 id="image-title" class="life-section-title">Images are sorted by AI</h2>
+        <div id="image-grid" aria-label="Image AI links">
+          <a class="life-card" href="https://adobe.com" target="_blank" rel="noopener noreferrer" aria-label="adobe.com">
+            <img src="AItuji-image/adobe.com.jpeg" alt="adobe.com">
+            <span>adobe.com</span>
+          </a>
+          <a class="life-card" href="https://bfl.ai" target="_blank" rel="noopener noreferrer" aria-label="bfl.ai">
+            <img src="AItuji-image/bfl.ai.jpeg" alt="bfl.ai">
+            <span>bfl.ai</span>
+          </a>
+          <a class="life-card" href="https://bing.com" target="_blank" rel="noopener noreferrer" aria-label="bing.com">
+            <img src="AItuji-image/bing.com.jpeg" alt="bing.com">
+            <span>bing.com</span>
+          </a>
+          <a class="life-card" href="https://ideogram.ai" target="_blank" rel="noopener noreferrer" aria-label="ideogram.ai">
+            <img src="AItuji-image/ideogram.ai.jpeg" alt="ideogram.ai">
+            <span>ideogram.ai</span>
+          </a>
+          <a class="life-card" href="https://leonardo.ai" target="_blank" rel="noopener noreferrer" aria-label="leonardo.ai">
+            <img src="AItuji-image/leonardo.ai.jpeg" alt="leonardo.ai">
+            <span>leonardo.ai</span>
+          </a>
+          <a class="life-card" href="https://midjourney.com" target="_blank" rel="noopener noreferrer" aria-label="midjourney.com">
+            <img src="AItuji-image/midjourney.com.jpeg" alt="midjourney.com">
+            <span>midjourney.com</span>
+          </a>
+          <a class="life-card" href="https://openart.ai" target="_blank" rel="noopener noreferrer" aria-label="openart.ai">
+            <img src="AItuji-image/openart.ai.jpeg" alt="openart.ai">
+            <span>openart.ai</span>
+          </a>
+          <a class="life-card" href="https://recraft.ai" target="_blank" rel="noopener noreferrer" aria-label="recraft.ai">
+            <img src="AItuji-image/recraft.ai.jpeg" alt="recraft.ai">
+            <span>recraft.ai</span>
+          </a>
+          <a class="life-card" href="https://seaart.ai" target="_blank" rel="noopener noreferrer" aria-label="seaart.ai">
+            <img src="AItuji-image/seaart.ai.jpeg" alt="seaart.ai">
+            <span>seaart.ai</span>
+          </a>
+          <a class="life-card" href="https://stability.ai" target="_blank" rel="noopener noreferrer" aria-label="stability.ai">
+            <img src="AItuji-image/stability.ai.jpeg" alt="stability.ai">
+            <span>stability.ai</span>
+          </a>
+        </div>
+
+        <h2 id="video-title" class="life-section-title">Video is sorted by AI</h2>
+        <div id="video-grid" aria-label="Video AI links">
+          <a class="life-card" href="https://genmo.ai" target="_blank" rel="noopener noreferrer" aria-label="genmo.ai">
+            <img src="AItuji-video/genmo.ai.jpeg" alt="genmo.ai">
+            <span>genmo.ai</span>
+          </a>
+          <a class="life-card" href="https://hailuoai.video" target="_blank" rel="noopener noreferrer" aria-label="hailuoai.video">
+            <img src="AItuji-video/hailuoai.video.jpeg" alt="hailuoai.video">
+            <span>hailuoai.video</span>
+          </a>
+          <a class="life-card" href="https://heygen.com" target="_blank" rel="noopener noreferrer" aria-label="heygen.com">
+            <img src="AItuji-video/heygen.com.jpeg" alt="heygen.com">
+            <span>heygen.com</span>
+          </a>
+          <a class="life-card" href="https://invideo.io" target="_blank" rel="noopener noreferrer" aria-label="invideo.io">
+            <img src="AItuji-video/invideo.io.jpeg" alt="invideo.io">
+            <span>invideo.io</span>
+          </a>
+          <a class="life-card" href="https://klingai.com" target="_blank" rel="noopener noreferrer" aria-label="klingai.com">
+            <img src="AItuji-video/klingai.com.jpeg" alt="klingai.com">
+            <span>klingai.com</span>
+          </a>
+          <a class="life-card" href="https://lumalabs.ai" target="_blank" rel="noopener noreferrer" aria-label="lumalabs.ai">
+            <img src="AItuji-video/lumalabs.ai.jpeg" alt="lumalabs.ai">
+            <span>lumalabs.ai</span>
+          </a>
+          <a class="life-card" href="https://pika.art" target="_blank" rel="noopener noreferrer" aria-label="pika.art">
+            <img src="AItuji-video/pika.art.jpeg" alt="pika.art">
+            <span>pika.art</span>
+          </a>
+          <a class="life-card" href="https://pixverse.ai" target="_blank" rel="noopener noreferrer" aria-label="pixverse.ai">
+            <img src="AItuji-video/pixverse.ai.jpeg" alt="pixverse.ai">
+            <span>pixverse.ai</span>
+          </a>
+          <a class="life-card" href="https://runwayml.com" target="_blank" rel="noopener noreferrer" aria-label="runwayml.com">
+            <img src="AItuji-video/runwayml.com.jpeg" alt="runwayml.com">
+            <span>runwayml.com</span>
+          </a>
+          <a class="life-card" href="https://synthesia.io" target="_blank" rel="noopener noreferrer" aria-label="synthesia.io">
+            <img src="AItuji-video/synthesia.io.jpeg" alt="synthesia.io">
+            <span>synthesia.io</span>
+          </a>
+        </div>
+
+        <h2 id="audio-title" class="life-section-title">Audio is sorted by AI</h2>
+        <div id="audio-grid" aria-label="Audio AI links">
+          <a class="life-card" href="https://aiva.ai" target="_blank" rel="noopener noreferrer" aria-label="aiva.ai">
+            <img src="AItuji-aodio/aiva.ai.jpeg" alt="aiva.ai">
+            <span>aiva.ai</span>
+          </a>
+          <a class="life-card" href="https://descript.com" target="_blank" rel="noopener noreferrer" aria-label="descript.com">
+            <img src="AItuji-aodio/descript.com.jpeg" alt="descript.com">
+            <span>descript.com</span>
+          </a>
+          <a class="life-card" href="https://elevenlabs.io" target="_blank" rel="noopener noreferrer" aria-label="elevenlabs.io">
+            <img src="AItuji-aodio/elevenlabs.io.jpeg" alt="elevenlabs.io">
+            <span>elevenlabs.io</span>
+          </a>
+          <a class="life-card" href="https://lalal.ai" target="_blank" rel="noopener noreferrer" aria-label="lalal.ai">
+            <img src="AItuji-aodio/lalal.ai.jpeg" alt="lalal.ai">
+            <span>lalal.ai</span>
+          </a>
+          <a class="life-card" href="https://murf.ai" target="_blank" rel="noopener noreferrer" aria-label="murf.ai">
+            <img src="AItuji-aodio/murf.ai.jpeg" alt="murf.ai">
+            <span>murf.ai</span>
+          </a>
+          <a class="life-card" href="https://podcastle.ai" target="_blank" rel="noopener noreferrer" aria-label="podcastle.ai">
+            <img src="AItuji-aodio/podcastle.ai.jpeg" alt="podcastle.ai">
+            <span>podcastle.ai</span>
+          </a>
+          <a class="life-card" href="https://riverside.fm" target="_blank" rel="noopener noreferrer" aria-label="riverside.fm">
+            <img src="AItuji-aodio/riverside.fm.jpeg" alt="riverside.fm">
+            <span>riverside.fm</span>
+          </a>
+          <a class="life-card" href="https://speechify.com" target="_blank" rel="noopener noreferrer" aria-label="speechify.com">
+            <img src="AItuji-aodio/speechify.com.jpeg" alt="speechify.com">
+            <span>speechify.com</span>
+          </a>
+          <a class="life-card" href="https://suno.com" target="_blank" rel="noopener noreferrer" aria-label="suno.com">
+            <img src="AItuji-aodio/suno.com.jpeg" alt="suno.com">
+            <span>suno.com</span>
+          </a>
+          <a class="life-card" href="https://udio.com" target="_blank" rel="noopener noreferrer" aria-label="udio.com">
+            <img src="AItuji-aodio/udio.com.jpeg" alt="udio.com">
+            <span>udio.com</span>
+          </a>
+        </div>
+
+        <button id="after-audio-toggle" class="after-audio-toggle" type="button" aria-expanded="false" aria-controls="after-audio-sections">展开后续分类</button>
+        <div id="after-audio-sections" hidden>
+        <h2 class="life-section-title">Programming is sorted by AI</h2>
+        <div id="programming-grid" aria-label="Programming AI links">
+          <a class="life-card" href="https://bolt.new" target="_blank" rel="noopener noreferrer" aria-label="bolt.new">
+            <img src="AItuji-Programming/bolt.new.jpeg" alt="bolt.new">
+            <span>bolt.new</span>
+          </a>
+          <a class="life-card" href="https://claude.ai" target="_blank" rel="noopener noreferrer" aria-label="claude.ai">
+            <img src="AItuji-Programming/claude.ai.jpeg" alt="claude.ai">
+            <span>claude.ai</span>
+          </a>
+          <a class="life-card" href="https://cursor.com" target="_blank" rel="noopener noreferrer" aria-label="cursor.com">
+            <img src="AItuji-Programming/cursor.com.jpeg" alt="cursor.com">
+            <span>cursor.com</span>
+          </a>
+          <a class="life-card" href="https://github.com" target="_blank" rel="noopener noreferrer" aria-label="github.com">
+            <img src="AItuji-Programming/github.com.jpeg" alt="github.com">
+            <span>github.com</span>
+          </a>
+          <a class="life-card" href="https://lovable.dev" target="_blank" rel="noopener noreferrer" aria-label="lovable.dev">
+            <img src="AItuji-Programming/lovable.dev.jpeg" alt="lovable.dev">
+            <span>lovable.dev</span>
+          </a>
+          <a class="life-card" href="https://openai.com" target="_blank" rel="noopener noreferrer" aria-label="openai.com">
+            <img src="AItuji-Programming/openai.com.jpeg" alt="openai.com">
+            <span>openai.com</span>
+          </a>
+          <a class="life-card" href="https://qodo.ai" target="_blank" rel="noopener noreferrer" aria-label="qodo.ai">
+            <img src="AItuji-Programming/qodo.ai.jpeg" alt="qodo.ai">
+            <span>qodo.ai</span>
+          </a>
+          <a class="life-card" href="https://replit.com" target="_blank" rel="noopener noreferrer" aria-label="replit.com">
+            <img src="AItuji-Programming/replit.com.jpeg" alt="replit.com">
+            <span>replit.com</span>
+          </a>
+          <a class="life-card" href="https://tabnine.com" target="_blank" rel="noopener noreferrer" aria-label="tabnine.com">
+            <img src="AItuji-Programming/tabnine.com.jpeg" alt="tabnine.com">
+            <span>tabnine.com</span>
+          </a>
+          <a class="life-card" href="https://v0.dev" target="_blank" rel="noopener noreferrer" aria-label="v0.dev">
+            <img src="AItuji-Programming/v0.dev.jpeg" alt="v0.dev">
+            <span>v0.dev</span>
+          </a>
+        </div>
+
+        <h2 class="life-section-title">Agent is sorted by AI</h2>
+        <div id="agent-grid" aria-label="Agent AI links">
+          <a class="life-card" href="https://character.ai" target="_blank" rel="noopener noreferrer" aria-label="character.ai">
+            <img src="AItuji-agent/character.ai.jpeg" alt="character.ai">
+            <span>character.ai</span>
+          </a>
+          <a class="life-card" href="https://chatgpt.com" target="_blank" rel="noopener noreferrer" aria-label="chatgpt.com">
+            <img src="AItuji-agent/chatgpt.com.jpeg" alt="chatgpt.com">
+            <span>chatgpt.com</span>
+          </a>
+          <a class="life-card" href="https://claude.ai" target="_blank" rel="noopener noreferrer" aria-label="claude.ai">
+            <img src="AItuji-agent/claude.ai.jpeg" alt="claude.ai">
+            <span>claude.ai</span>
+          </a>
+          <a class="life-card" href="https://coze.com" target="_blank" rel="noopener noreferrer" aria-label="coze.com">
+            <img src="AItuji-agent/coze.com.jpeg" alt="coze.com">
+            <span>coze.com</span>
+          </a>
+          <a class="life-card" href="https://cursor.com" target="_blank" rel="noopener noreferrer" aria-label="cursor.com">
+            <img src="AItuji-agent/cursor.com.jpeg" alt="cursor.com">
+            <span>cursor.com</span>
+          </a>
+          <a class="life-card" href="https://dify.ai" target="_blank" rel="noopener noreferrer" aria-label="dify.ai">
+            <img src="AItuji-agent/dify.ai.jpeg" alt="dify.ai">
+            <span>dify.ai</span>
+          </a>
+          <a class="life-card" href="https://gamma.app" target="_blank" rel="noopener noreferrer" aria-label="gamma.app">
+            <img src="AItuji-agent/gamma.app.jpeg" alt="gamma.app">
+            <span>gamma.app</span>
+          </a>
+          <a class="life-card" href="https://genspark.ai" target="_blank" rel="noopener noreferrer" aria-label="genspark.ai">
+            <img src="AItuji-agent/genspark.ai.jpeg" alt="genspark.ai">
+            <span>genspark.ai</span>
+          </a>
+          <a class="life-card" href="https://glean.com" target="_blank" rel="noopener noreferrer" aria-label="glean.com">
+            <img src="AItuji-agent/glean.com.jpeg" alt="glean.com">
+            <span>glean.com</span>
+          </a>
+          <a class="life-card" href="https://grok.com" target="_blank" rel="noopener noreferrer" aria-label="grok.com">
+            <img src="AItuji-agent/grok.com.jpeg" alt="grok.com">
+            <span>grok.com</span>
+          </a>
+          <a class="life-card" href="https://kimi.com" target="_blank" rel="noopener noreferrer" aria-label="kimi.com">
+            <img src="AItuji-agent/kimi.com.jpeg" alt="kimi.com">
+            <span>kimi.com</span>
+          </a>
+          <a class="life-card" href="https://lovable.dev" target="_blank" rel="noopener noreferrer" aria-label="lovable.dev">
+            <img src="AItuji-agent/lovable.dev.jpeg" alt="lovable.dev">
+            <span>lovable.dev</span>
+          </a>
+          <a class="life-card" href="https://manus.im" target="_blank" rel="noopener noreferrer" aria-label="manus.im">
+            <img src="AItuji-agent/manus.im.jpeg" alt="manus.im">
+            <span>manus.im</span>
+          </a>
+          <a class="life-card" href="https://openclaw.ai" target="_blank" rel="noopener noreferrer" aria-label="openclaw.ai">
+            <img src="AItuji-agent/openclaw.ai.jpeg" alt="openclaw.ai">
+            <span>openclaw.ai</span>
+          </a>
+          <a class="life-card" href="https://replit.com" target="_blank" rel="noopener noreferrer" aria-label="replit.com">
+            <img src="AItuji-agent/replit.com.jpeg" alt="replit.com">
+            <span>replit.com</span>
+          </a>
+        </div>
+
+        </div>
+
+        <div style="text-align:center;margin-top:2rem">
+          <img src="ok012_a.png" alt="Logo" style="display:block;height:96px;border-radius:6px;margin:0 auto 0.5rem auto;" onerror="this.src='https://picsum.photos/seed/logo/120/40'">
+          <div style="margin-top:0.5rem;color:var(--muted)">Follow me, save me, and easily step into the AI era !</div>
+        </div>
+
+        <div style="height:2rem"></div>
+        <div style="display:flex;justify-content:center;gap:2rem;margin-top:1.5rem">
+          <a href="pages/Website%20collaboration.html" style="color:inherit">Website collaboration</a>
+          <a href="pages/about-us.html" style="color:inherit">business collaboration</a>
+          <a href="pages/Partners%20and%20Collaborators.html" style="color:inherit"> Partners and Collaborators</a>
+        </div>
+
+        <footer class="site-footer">
+          Copyright © 16/08/2026 AI &nbsp;&nbsp; Contact Us Email: udedv12@outlook.com
+        </footer>
+      </div>
+    </section>
+  </main>
+
+
+ <script>
+  const contentGrid = document.getElementById('content-grid');
+  const categoryLinks = [
+    { file: 'bing.com.jpg', domain: 'bing.com', url: 'https://www.bing.com' },
+    { file: 'canva.com.jpg', domain: 'canva.com', url: 'https://www.canva.com' },
+    { file: 'character.ai.jpg', domain: 'character.ai', url: 'https://character.ai' },
+    { file: 'chatgpt.com.jpg', domain: 'chatgpt.com', url: 'https://chatgpt.com' },
+    { file: 'claude.ai.jpg', domain: 'claude.ai', url: 'https://claude.ai' },
+    { file: 'cursor.com.jpg', domain: 'cursor.com', url: 'https://cursor.com' },
+    { file: 'gamma.app.jpg', domain: 'gamma.app', url: 'https://gamma.app' },
+    { file: 'grok.com.jpg', domain: 'grok.com', url: 'https://grok.com' },
+    { file: 'kimi.com.png', domain: 'kimi.com', url: 'https://kimi.com' },
+    { file: 'lmarena.ai.jpg', domain: 'lmarena.ai', url: 'https://lmarena.ai' },
+    { file: 'lovable.dev.jpeg', domain: 'lovable.dev', url: 'https://lovable.dev' },
+    { file: 'manus.im.png', domain: 'manus.im', url: 'https://manus.im' },
+    { file: 'notion.so.png', domain: 'notion.so', url: 'https://www.notion.so' },
+    { file: 'openai.com.jpeg', domain: 'openai.com', url: 'https://openai.com' },
+    { file: 'perplexity.ai.jpg', domain: 'perplexity.ai', url: 'https://www.perplexity.ai' }
+  ];
+
+  function renderCategoryLinks(){
+    categoryLinks.forEach(({ file, domain, url }) => {
+      const card = document.createElement('a');
+      card.className = 'card';
+      card.href = url;
+      card.target = '_blank';
+      card.rel = 'noopener noreferrer';
+      card.setAttribute('aria-label', domain);
+
+      const image = document.createElement('img');
+      image.src = `AItuji-123/${encodeURIComponent(file)}`;
+      image.alt = domain;
+
+      const meta = document.createElement('div');
+      meta.className = 'meta';
+      const label = document.createElement('h3');
+      label.textContent = domain;
+      meta.appendChild(label);
+      card.append(image, meta);
+      contentGrid.appendChild(card);
+    });
+  }
+
+  function setupSidebar(){
+    const scrollContainer = document.querySelector('.scroll-container');
+
+    document.querySelectorAll('.sidebar-item').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.sidebar-item').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const target = document.getElementById(btn.dataset.target);
+        if (!target || !scrollContainer) return;
+
+        const containerStyle = getComputedStyle(scrollContainer);
+        const targetTop = target.getBoundingClientRect().top
+          - scrollContainer.getBoundingClientRect().top
+          + scrollContainer.scrollTop
+          - scrollContainer.clientTop
+          - parseFloat(containerStyle.paddingTop);
+
+        scrollContainer.scrollTo({ top: targetTop, behavior: 'smooth' });
+      });
+    });
+    const first = document.querySelector('.sidebar-item');
+    if (first) first.classList.add('active');
+  }
+
+  function setupAfterAudioToggle(){
+    const toggle = document.getElementById('after-audio-toggle');
+    const sections = document.getElementById('after-audio-sections');
+    toggle.addEventListener('click', () => {
+      const expanded = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', String(!expanded));
+      sections.hidden = expanded;
+      toggle.textContent = expanded ? '展开后续分类' : '收起后续分类';
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    renderCategoryLinks();
+    setupSidebar();
+    setupAfterAudioToggle();
+  });
+</script>
+
+
+</body>
+</html>

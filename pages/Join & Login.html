@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b8457">
+  <title>Join &amp; Login | Membership Registration and Upgrade</title>
+  <style>
+    :root {
+      color-scheme: light;
+      font-family: Arial, "Microsoft YaHei", sans-serif;
+      color: #18332a;
+      background: #edf9ee;
+      font-synthesis: none;
+      text-rendering: optimizeLegibility;
+    }
+    * { box-sizing: border-box; }
+    body { min-height: 100vh; margin: 0; padding: 32px 18px 48px; background: radial-gradient(ellipse at top left, #d9f3df 0, transparent 42%), #edf9ee; }
+    button, input, select { font: inherit; }
+    button, a, input, select { -webkit-tap-highlight-color: transparent; }
+    .page { width: min(100%, 1000px); margin: 0 auto; }
+    .topbar { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 24px; }
+    .brand { display: inline-flex; align-items: center; gap: 12px; color: #18332a; text-decoration: none; font-weight: 800; }
+    .brand img { width: 48px; height: 48px; object-fit: cover; border-radius: 12px; }
+    .layout { display: grid; grid-template-columns: minmax(0, .9fr) minmax(360px, 1.1fr); gap: 24px; align-items: start; }
+    .intro, .card { border: 1px solid rgba(11, 132, 87, .12); border-radius: 24px; box-shadow: 0 18px 50px rgba(24, 51, 42, .08); }
+    .intro { position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; min-height: 413px; padding: clamp(28px, 5vw, 52px); color: white; background: linear-gradient(145deg, #0b8457, #155c49 72%, #163d37); }
+    .intro::after { position: absolute; right: -110px; bottom: -120px; width: 340px; height: 340px; border: 1px solid #ffffff24; border-radius: 50%; box-shadow: 0 0 0 36px #ffffff0a, 0 0 0 76px #ffffff08; content: ""; }
+    .eyebrow { display: inline-flex; width: fit-content; align-items: center; gap: 8px; padding: 7px 11px; border: 1px solid #ffffff40; border-radius: 999px; background: #ffffff12; font-size: .82rem; }
+    .eyebrow::before { width: 7px; height: 7px; border-radius: 50%; background: #a6efbd; content: ""; }
+    h1 { margin: 22px 0 12px; font-size: clamp(2.2rem, 5vw, 3.6rem); line-height: 1.08; letter-spacing: -.04em; }
+    .intro-copy { max-width: 400px; margin: 0; color: #e1f4e8; line-height: 1.8; }
+    .benefits { display: grid; gap: 13px; margin: 34px 0 0; padding: 0; list-style: none; }
+    .benefits li { display: flex; gap: 11px; align-items: flex-start; color: #f0fff3; line-height: 1.55; }
+    .check { display: inline-grid; flex: 0 0 22px; width: 22px; height: 22px; place-items: center; border-radius: 50%; background: #ffffff20; color: #baf3c9; font-size: .85rem; }
+    .intro-foot { position: relative; z-index: 1; margin-top: 44px; color: #d0e9d8; font-size: .86rem; line-height: 1.6; }
+    .card { padding: clamp(22px, 4vw, 38px); background: #fff; }
+    .card-heading { margin-bottom: 25px; }
+    .card-heading h2 { margin: 0 0 8px; color: #153c30; font-size: 1.65rem; }
+    .card-heading p { margin: 0; color: #6d8077; line-height: 1.6; }
+    .mode-switch { margin-top: 14px; padding: 0; border: 0; background: none; color: #0b8457; font: inherit; font-size: .9rem; font-weight: 700; text-decoration: underline; cursor: pointer; }
+    .security-note { margin: 10px 0 0; color: #8a5b21; font-size: .78rem; line-height: 1.55; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 17px 14px; }
+    .field { min-width: 0; }
+    .field.full { grid-column: 1 / -1; }
+    .device-field { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: end; gap: 14px; margin-bottom: 17px; }
+    .device-control { min-width: 0; }
+    .device-field .mode-switch { justify-self: end; margin: 0 0 12px; white-space: nowrap; }
+    label { display: block; margin-bottom: 7px; color: #29483c; font-size: .91rem; font-weight: 700; }
+    .optional { color: #84948c; font-size: .8rem; font-weight: 400; }
+    input:not([type="checkbox"]), select { width: 100%; min-height: 48px; padding: 11px 13px; border: 2px solid #0b8457; border-radius: 11px; outline: none; background: #fbfdfb; color: #18332a; transition: border-color .18s, box-shadow .18s, background .18s; }
+    #device:invalid { color: #a1afa7; font-size: 12px; }
+    #device option:disabled { color: #a1afa7; font-size: 12px; }
+    input::placeholder { color: #a1afa7; }
+    input:focus, select:focus { border-color: #0b8457; background: #fff; box-shadow: 0 0 0 3px #0b84571a; }
+    .hint { margin: 6px 0 0; color: #819188; font-size: .78rem; line-height: 1.5; }
+    .consent { display: flex; align-items: flex-start; gap: 10px; margin: 19px 0; color: #63776c; font-size: .84rem; line-height: 1.6; }
+    .consent input { flex: 0 0 17px; width: 17px; min-height: 17px; height: 17px; margin: 3px 0 0; accent-color: #0b8457; }
+    .consent a, .privacy-note a { color: #0b8457; }
+    .primary, .secondary { display: inline-flex; min-height: 49px; align-items: center; justify-content: center; border: 0; border-radius: 12px; cursor: pointer; font-weight: 800; transition: transform .15s, filter .15s; }
+    .primary { width: 100%; padding: 12px 18px; color: white; background: linear-gradient(135deg, #119467, #08724e); box-shadow: 0 8px 18px #0b84572b; }
+    .primary:hover, .secondary:hover { filter: brightness(.96); transform: translateY(-1px); }
+    .privacy-note { margin: 13px 0 0; color: #829188; font-size: .76rem; line-height: 1.55; text-align: center; }
+    .message { display: none; margin: 0 0 16px; padding: 11px 13px; border-radius: 10px; line-height: 1.5; }
+    .message.error { display: block; color: #913c36; background: #fff1ef; }
+    .message.success { display: block; color: #176346; background: #e9f8ee; }
+    .success-panel { display: none; text-align: center; }
+    .success-icon { display: grid; width: 60px; height: 60px; margin: 3px auto 17px; place-items: center; border-radius: 50%; color: #0b8457; background: #e4f6e9; font-size: 1.8rem; font-weight: 800; }
+    .success-panel h2 { margin: 0 0 9px; font-size: 1.7rem; }
+    .success-panel > p { margin: 0 auto 21px; color: #718178; line-height: 1.7; }
+    .profile-summary { display: grid; gap: 10px; margin: 0 0 22px; padding: 16px; border: 1px solid #e2eee5; border-radius: 13px; background: #f8fcf8; text-align: left; }
+    .profile-line { display: flex; justify-content: space-between; gap: 15px; font-size: .88rem; }
+    .profile-line span:first-child { color: #73837a; }
+    .profile-line strong { overflow-wrap: anywhere; text-align: right; }
+    .secondary { width: 100%; padding: 10px 15px; color: #0b8457; border: 1px solid #b8ddc4; background: white; }
+    .plans { margin-top: 24px; padding-top: 22px; border-top: 1px solid #e8eee9; }
+    .plans-head { display: flex; justify-content: space-between; align-items: end; gap: 10px; margin-bottom: 13px; }
+    .plans-head h3 { margin: 0; font-size: 1.1rem; }
+    .plans-head p { margin: 0; color: #829188; font-size: .77rem; }
+    .plan-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 9px; }
+    .plan { position: relative; display: flex; min-height: 135px; flex-direction: column; align-items: flex-start; padding: 13px 11px; border: 1px solid #dce8df; border-radius: 13px; background: #fff; text-align: left; cursor: pointer; }
+    .plan:hover { border-color: #75b98e; }
+    .plan[aria-pressed="true"] { border: 2px solid #0b8457; padding: 12px 10px; background: #f5fcf6; box-shadow: 0 0 0 3px #0b845710; }
+    .plan-name { color: #214637; font-weight: 800; }
+    .plan-price { margin: 8px 0 5px; color: #0b8457; font-size: 1.12rem; font-weight: 800; }
+    .plan-desc { color: #839188; font-size: .72rem; line-height: 1.45; }
+    .plan-state { display: none; margin-top: auto; padding-top: 8px; color: #0b8457; font-size: .7rem; font-weight: 800; }
+    .plan[aria-pressed="true"] .plan-state { display: block; }
+    .upgrade-button { margin-top: 12px; }
+    .demo-note { margin: 9px 0 0; color: #89968f; font-size: .72rem; line-height: 1.5; }
+    .auth-dialog { width: min(440px, calc(100% - 32px)); margin: auto; padding: 26px; border: 1px solid #d9e9dd; border-radius: 18px; color: #18332a; background: #fff; box-shadow: 0 24px 80px #10271b40; }
+    .auth-dialog::backdrop { background: #10271b80; backdrop-filter: blur(3px); }
+    .auth-dialog h2 { margin: 0 0 10px; color: #913c36; font-size: 1.25rem; }
+    .auth-dialog p { margin: 0 0 20px; color: #52665b; line-height: 1.65; }
+    .auth-dialog .primary { min-height: 44px; }
+    #login-view[hidden], #register-view[hidden], #success-view[hidden], #plans[hidden] { display: none; }
+    [hidden] { display: none !important; }
+    @media (max-width: 760px) {
+      body { padding: 18px 13px 32px; }
+      .topbar { margin-bottom: 15px; }
+      .layout { grid-template-columns: 1fr; gap: 14px; }
+      .intro { min-height: 0; padding: 25px; }
+      .intro h1 { margin-top: 16px; font-size: 2.35rem; }
+      .benefits { grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 22px; }
+      .intro-foot { margin-top: 23px; }
+    }
+    @media (max-width: 430px) {
+      .form-grid { grid-template-columns: 1fr; }
+      .field.full { grid-column: auto; }
+      .device-field { grid-template-columns: 1fr; }
+      .device-field .mode-switch { margin: 0; }
+      .benefits { grid-template-columns: 1fr; }
+      .plan-list { gap: 6px; }
+      .plan { padding: 11px 8px; }
+      .plan[aria-pressed="true"] { padding: 10px 7px; }
+      .plan-name { font-size: .86rem; }
+      .plan-price { font-size: 1rem; }
+      .plan-desc { font-size: .68rem; }
+    }
+  </style>
+  <link rel="stylesheet" href="../assets/responsive.css">
+</head>
+<body>
+  <div class="page">
+    <header class="topbar">
+      <a class="brand" href="../index.html" aria-label="AI Gallery home">
+        <img src="../ok012_a.png" alt="AI Gallery logo">
+        <span>AI Gallery · Membership</span>
+      </a>
+    </header>
+
+    <main class="layout">
+      <section class="intro" aria-labelledby="intro-title">
+        <div>
+          <span class="eyebrow">JOIN &amp; LOGIN</span>
+          <h1 id="intro-title">Join us.<br>Unlock more AI inspiration.</h1>
+          <ul class="benefits">
+            <li><span class="check" aria-hidden="true">✓</span><span>Save and organize your favorite AI tools</span></li>
+            <li><span class="check" aria-hidden="true">✓</span><span>Keep your preferences across devices</span></li>
+            <li><span>View and change your membership level anytime</span></li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="card" aria-labelledby="form-title">
+        <div id="register-view">
+          <div class="card-heading">
+            <h2 id="form-title">Create your account</h2>
+            <p>Account creation is unavailable until a secure server is configured.</p>
+          </div>
+        </div>
+          <div class="device-field">
+            <div class="device-control">
+              <label for="device">Primary device type</label>
+              <select id="device" name="device" form="register-form" required>
+                <option value="" selected disabled>Select your primary device</option>
+                <option value="Phone">Phone</option>
+                <option value="Tablet">Tablet</option>
+                <option value="Computer">Computer</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <button id="auth-mode-switch" class="mode-switch" type="button">Already signed in with an account</button>
+          </div>
+          <form id="register-form" novalidate>
+            <div class="form-grid">
+              <div class="field">
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" autocomplete="email" placeholder="name@example.com">
+              </div>
+              <div class="field">
+                <label for="phone">Phone number</label>
+                <input id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="Enter your phone number">
+              </div>
+              <div class="field full">
+                <p class="hint">Enter at least an email address or phone number. Providing both is recommended for account recovery.</p>
+              </div>
+              <div class="field">
+                <label for="password">Set password</label>
+                <input id="password" name="password" type="password" autocomplete="new-password" minlength="6" maxlength="32" pattern="[A-Za-z0-9]{6,32}" placeholder="At least 6 letters or numbers" required>
+              </div>
+              <div class="field">
+                <label for="confirm-password">Confirm password</label>
+                <input id="confirm-password" name="confirmPassword" type="password" autocomplete="new-password" minlength="6" maxlength="32" placeholder="Enter your password again" required>
+              </div>
+            </div>
+            <p class="hint">Use 6–32 letters and/or numbers. Your password is used only for form validation and is not stored.</p>
+            <label class="consent" for="consent">
+              <input id="consent" name="consent" type="checkbox" required>
+              <span>I have read and agree to the <a href="Website%20User%20Service%20Agreement.html" target="_blank" rel="noopener">User Service Agreement</a> and <a href="Privacy%20Policy.html" target="_blank" rel="noopener">Privacy Policy</a>. This demo does not create or store an account.</span>
+            </label>
+            <button class="primary" type="submit">Register and continue</button>
+            <p class="privacy-note">Do not enter real credentials or personal information. This page does not create accounts or transmit form data.</p>
+          </form>
+
+        <div id="login-view" hidden>
+          <div class="card-heading">
+            <h2>Login</h2>
+            <p>Enter your account identifier and password.</p>
+          </div>
+          <form id="login-form" novalidate>
+            <div class="field">
+              <label for="login-identifier">Email or phone number</label>
+              <input id="login-identifier" name="identifier" type="text" autocomplete="username" maxlength="254" required>
+            </div>
+            <div class="field" style="margin-top:17px">
+              <label for="login-password">Password</label>
+              <input id="login-password" name="password" type="password" autocomplete="current-password" maxlength="128" required>
+            </div>
+            <button class="primary" style="margin-top:20px" type="submit">Login</button>
+          </form>
+        </div>
+
+      </section>
+    </main>
+  </div>
+  <a href="../index.html" style="position:fixed;right:20px;bottom:20px;z-index:1000;padding:11px 16px;border-radius:999px;background:#0b8457;color:#fff;font-weight:700;text-decoration:none;box-shadow:0 6px 18px #18332a30">Back to home</a>
+
+  <dialog id="auth-failure-dialog" class="auth-dialog" aria-labelledby="auth-failure-title" aria-describedby="auth-failure-message">
+    <h2 id="auth-failure-title">操作未完成</h2>
+    <p id="auth-failure-message"></p>
+    <button id="auth-failure-close" class="primary" type="button">我知道了</button>
+  </dialog>
+
+  <script>
+    (() => {
+      const form = document.querySelector("#register-form");
+      const registerView = document.querySelector("#register-view");
+      const loginView = document.querySelector("#login-view");
+      const loginForm = document.querySelector("#login-form");
+      const modeSwitch = document.querySelector("#auth-mode-switch");
+      const failureDialog = document.querySelector("#auth-failure-dialog");
+      const failureMessage = document.querySelector("#auth-failure-message");
+
+      const showFailure = (text) => {
+        failureMessage.textContent = text;
+        form.reset();
+        loginForm.reset();
+        if (typeof failureDialog.showModal === "function") failureDialog.showModal();
+        else window.alert(text);
+      };
+
+      try {
+        localStorage.removeItem("wenlin-membership-profile");
+      } catch {
+        // Storage may be disabled; no authentication data is written by this page.
+      }
+
+      modeSwitch.addEventListener("click", () => {
+        const showingLogin = !loginView.hidden;
+        loginView.hidden = showingLogin;
+        registerView.hidden = !showingLogin;
+        form.hidden = !showingLogin;
+        document.querySelector(".device-control").hidden = !showingLogin;
+        modeSwitch.textContent = showingLogin ? "Already signed in with an account" : "Back to registration";
+        document.querySelector("#form-title").textContent = "Create your account";
+        if (showingLogin) form.reset();
+        else loginForm.elements.identifier.focus();
+      });
+
+      document.querySelector("#auth-failure-close").addEventListener("click", () => failureDialog.close());
+
+      loginForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const identifier = loginForm.elements.identifier.value.trim();
+        const password = loginForm.elements.password.value;
+        if (!identifier || !password) {
+          showFailure("登录失败：请填写邮箱或手机号和密码。");
+          return;
+        }
+        loginForm.reset();
+        showFailure("登录失败：当前网站没有配置安全的服务端身份验证。为保护账号安全，输入内容不会发送、验证或保存。请勿使用真实密码。 ");
+      });
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const data = new FormData(form);
+        const email = String(data.get("email") || "").trim();
+        const phone = String(data.get("phone") || "").trim();
+        const device = String(data.get("device") || "");
+        const password = String(data.get("password") || "");
+        const confirmPassword = String(data.get("confirmPassword") || "");
+        const emailValid = !email || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        const phoneValid = !phone || /^[+\d\s()-]{6,20}$/.test(phone);
+
+        if (!email && !phone) return showFailure("注册失败：请填写邮箱或手机号。");
+        if (!emailValid) return showFailure("注册失败：邮箱格式不正确。");
+        if (!phoneValid) return showFailure("注册失败：手机号格式不正确。");
+        if (!device) return showFailure("注册失败：请选择主要设备类型。");
+        if (!/^[A-Za-z0-9]{6,32}$/.test(password)) return showFailure("注册失败：密码须为 6–32 位英文字母或数字。演示页面不会保存密码，请勿使用真实密码。");
+        if (password !== confirmPassword) return showFailure("注册失败：两次输入的密码不一致。");
+        if (!data.get("consent")) return showFailure("注册失败：请先阅读并同意《用户服务协议》和《隐私政策》。");
+
+        form.reset();
+        showFailure("注册失败：网站尚未接入安全的服务端账号系统，无法合法验证或创建账户。提交内容不会发送或保存；请勿使用真实个人资料或密码。");
+      });
+
+    })();
+  </script>
+</body>
+</html>

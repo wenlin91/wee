@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Prompt Generator</title>
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        background: linear-gradient(180deg, #edf9ee 0%, #dbeedc 42%, #d2ebd1 100%);
+        color: #18332a;
+      }
+
+      .header-top-spacer {
+        height: 1.75rem;
+      }
+
+      .header-bottom-spacer {
+        height: 1rem;
+      }
+
+      .page-shell {
+        width: min(100%, 1600px);
+        margin: 0 auto;
+        padding-left: 6.25%;
+        padding-right: 6.25%;
+      }
+
+      .header-shell {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 50;
+        pointer-events: none;
+      }
+
+      .header-inner {
+        width: min(100%, 1600px);
+        margin: 0 auto;
+        padding-left: 6.25%;
+        padding-right: 6.25%;
+        padding-top: 6px;
+        pointer-events: auto;
+      }
+
+      .nav-row {
+        height: 42px;
+        display: flex;
+        align-items: center;
+      }
+
+      .logo-wrap {
+        width: 15%;
+        min-width: 90px;
+        display: flex;
+        align-items: center;
+      }
+
+      .logo-wrap img {
+        width: 84px;
+        height: 80px;
+        object-fit: cover;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(16, 82, 48, 0.12);
+      }
+
+      .top-nav {
+        width: 85%;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .top-nav a {
+        font-size: 1.05rem;
+        color: #1d2d25;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        transition: color 0.2s ease;
+      }
+
+      .top-nav a:hover {
+        color: #2f8a5b;
+      }
+
+      .banner-row {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 52px;
+        text-align: center;
+      }
+
+      .slogan {
+        font-size: clamp(1.3rem, 1.8vw, 1.9rem);
+        color: #d91d1d;
+        font-weight: 800;
+        letter-spacing: 0.04em;
+      }
+
+      .content-wrap {
+        padding-top: 150px;
+        padding-bottom: 18px;
+      }
+
+      .prompt-box {
+        width: min(100%, 980px);
+        margin: 0 auto;
+        position: sticky;
+        bottom: 8px;
+        background: rgba(255, 255, 255, 0.7);
+        border: 1px solid rgba(95, 146, 108, 0.26);
+        backdrop-filter: blur(8px);
+        border-radius: 20px;
+        box-shadow: 0 10px 22px rgba(58, 98, 70, 0.12);
+        overflow: hidden;
+      }
+
+      .prompt-input-wrap {
+        position: relative;
+      }
+
+      .prompt-input {
+        display: block;
+        width: 100%;
+        min-height: 455px;
+        resize: vertical;
+        border: none;
+        outline: none;
+        background: transparent;
+        font-family: inherit;
+        font-size: 1rem;
+        line-height: 1.7;
+        color: #1f2a25;
+        padding: 14px 76px 14px 18px;
+        text-align: left;
+        text-indent: 4ch;
+      }
+
+      .prompt-input::placeholder {
+        color: #8b9690;
+        opacity: 1;
+        text-align: center;
+        text-indent: 0;
+      }
+
+      .composer-bar {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+      }
+
+      .submit-btn,
+      .action-icon {
+        border: none;
+        cursor: pointer;
+        transition: transform 0.2s ease, opacity 0.2s ease;
+      }
+
+      .submit-btn:hover,
+      .action-icon:hover {
+        transform: translateY(-1px);
+      }
+
+      .submit-btn {
+        position: absolute;
+        right: 14px;
+        bottom: 14px;
+        width: 52px;
+        height: 52px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #8ac69a 0%, #4d9b73 100%);
+        color: white;
+        box-shadow: 0 10px 20px rgba(83, 150, 93, 0.25);
+        pointer-events: auto;
+      }
+
+      .action-bar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px;
+        padding-top: 10px;
+        padding-bottom: 6px;
+      }
+
+      .action-icons {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        position: relative;
+        left: -12ch;
+      }
+
+      .action-icon {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.5);
+        border: 1px solid rgba(62, 114, 80, 0.15);
+        color: #1e3d30;
+      }
+
+      .note {
+        text-align: center;
+        font-size: 0.88rem;
+        color: #3f514a;
+        margin: 0;
+      }
+
+      @media (max-width: 768px) {
+        .page-shell,
+        .header-inner {
+          padding-left: 4%;
+          padding-right: 4%;
+        }
+
+        .header-shell {
+          position: relative;
+        }
+
+        .nav-row {
+          height: auto;
+          padding-top: 12px;
+          padding-bottom: 8px;
+          flex-wrap: wrap;
+          gap: 10px;
+        }
+
+        .logo-wrap {
+          width: auto;
+        }
+
+        .top-nav {
+          width: 100%;
+          justify-content: space-between;
+          flex-wrap: wrap;
+          gap: 8px 10px;
+        }
+
+        .banner-row {
+          height: 60px;
+        }
+
+        .content-wrap {
+          padding-top: 32px;
+        }
+
+        .composer-bar {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .tool-group {
+          justify-content: space-between;
+          flex-wrap: wrap;
+        }
+
+        .submit-btn {
+          align-self: flex-end;
+        }
+      }
+    </style>
+    <link rel="stylesheet" href="assets/responsive.css">
+  </head>
+  <body>
+    <div class="header-shell">
+      <div class="header-inner">
+        <div class="header-top-spacer" aria-hidden="true"></div>
+
+        <div class="nav-row">
+          <div class="logo-wrap">
+            <img src="./ok012_a.png" alt="Logo" />
+          </div>
+          <nav class="top-nav" aria-label="主导航">
+            <a href="index.html">Home</a>
+            <a href="blog-generator.html">Blog</a>
+            <a href="prompt-generator.html">Prompt</a>
+            <a href="life-generator.html">Life</a>
+            <a href="generated.v1.html">Commuty</a>
+            <a href="pages/Join%20%26%20Login.html">Join &amp; Login</a>
+          </nav>
+        </div>
+
+        <div class="banner-row">
+          <div class="slogan">Getting Better at Writing and Practice AI skills !</div>
+        </div>
+
+        <div class="header-bottom-spacer" aria-hidden="true"></div>
+      </div>
+    </div>
+
+    <main class="page-shell content-wrap">
+      <section class="prompt-box" aria-label="Prompt Generator input area">
+        <div class="prompt-input-wrap">
+        <textarea
+          id="promptInput"
+          class="prompt-input"
+          placeholder="Enter your prompt, copy it, then click the button to submit, paste it into the redirected website input box, submit, and generate the content you need."
+          aria-label="Prompt input"
+        ></textarea>
+
+        <div class="composer-bar">
+          <button id="submitBtn" class="submit-btn" type="button" aria-label="随机打开一个 AI 网站" title="随机打开一个 AI 网站" data-destinations="https://app.karpo.ai,https://elsaspeak.com,https://flash.co,https://kindroid.ai,https://pi.ai,https://replika.com,https://sleepcycle.com,https://thefabulous.co,https://wanderboat.ai,https://youper.ai">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" aria-hidden="true">
+              <path d="M3 11.5L20 3L15.5 20L11.5 13.5L3 11.5Z" fill="currentColor"/>
+            </svg>
+          </button>
+        </div>
+        </div>
+      </section>
+
+      <div class="action-bar" aria-label="生成结果操作栏">
+        <div class="action-icons">
+          <button class="action-icon" type="button" aria-label="复制">⧉</button>
+          <button class="action-icon" type="button" aria-label="收藏">★</button>
+          <button class="action-icon" type="button" aria-label="重做">↺</button>
+          <button class="action-icon" type="button" aria-label="点赞">👍</button>
+          <button class="action-icon" type="button" aria-label="点踩">👎</button>
+          <button class="action-icon" type="button" aria-label="分享">⇪</button>
+        </div>
+        <div class="note">Content is purely AI-generated and for reference only</div>
+        <div style="height: 12px;"></div>
+        <div style="display: flex; align-items: center; gap: 10px; justify-content: flex-start; color: #3f514a; margin: 0; padding-left: 16ch; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: 'Times New Roman', serif; font-size: 18px;">
+          <span style="font-weight: 700; color: #2d6a4f; margin-left: 6ch; position: relative; left: -10ch; font-family: 'Times New Roman', serif; font-size: 18px;">Textbook Updates</span>
+          <span style="font-weight: 700; color: #1d2d25; font-family: 'Times New Roman', serif; font-size: 18px;">AI-blog:</span>
+          <a href="pages/01.html" style="color: #2d6a4f; text-decoration: underline; font-family: 'Times New Roman', serif; font-size: 18px;">1. pages/01.md</a>
+          <a href="pages/02.html" style="color: #2d6a4f; text-decoration: underline; font-family: 'Times New Roman', serif; font-size: 18px;">2. pages/02.md</a>
+          <a href="pages/03.html" style="color: #2d6a4f; text-decoration: underline; font-family: 'Times New Roman', serif; font-size: 18px;">3. pages/03.md</a>
+          <a href="pages/" style="color: #2d6a4f; text-decoration: underline; font-family: 'Times New Roman', serif; font-size: 18px;">4. 更多…</a>
+        </div>
+      </div>
+    </main>
+
+    <script src="assets/generator.js" defer></script>
+    <a href="index.html" style="position:fixed;right:20px;bottom:20px;z-index:1000;padding:11px 16px;border-radius:999px;background:#0b8457;color:#fff;font-weight:700;text-decoration:none;box-shadow:0 6px 18px #18332a30">Back to home</a>
+  </body>
+</html>
