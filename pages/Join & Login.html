@@ -1,8 +1,9 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" translate="no">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google" content="notranslate">
   <meta name="theme-color" content="#0b8457">
   <title>Join &amp; Login | Membership Registration and Upgrade</title>
   <style>
@@ -45,7 +46,7 @@
     .field.full { grid-column: 1 / -1; }
     .device-field { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: end; gap: 14px; margin-bottom: 17px; }
     .device-control { min-width: 0; }
-    .device-field .mode-switch { justify-self: end; margin: 0 0 12px; white-space: nowrap; }
+    .device-field .mode-switch { justify-self: end; margin: 0 0 12px; white-space: nowrap; transform: translateX(-3ch); }
     label { display: block; margin-bottom: 7px; color: #29483c; font-size: .91rem; font-weight: 700; }
     .optional { color: #84948c; font-size: .8rem; font-weight: 400; }
     input:not([type="checkbox"]), select { width: 100%; min-height: 48px; padding: 11px 13px; border: 2px solid #0b8457; border-radius: 11px; outline: none; background: #fbfdfb; color: #18332a; transition: border-color .18s, box-shadow .18s, background .18s; }
@@ -118,7 +119,6 @@
       .plan-desc { font-size: .68rem; }
     }
   </style>
-  <link rel="stylesheet" href="../assets/responsive.css">
 </head>
 <body>
   <div class="page">
@@ -160,7 +160,7 @@
                 <option value="Other">Other</option>
               </select>
             </div>
-            <button id="auth-mode-switch" class="mode-switch" type="button">Already signed in with an account</button>
+            <button id="auth-mode-switch" class="mode-switch" type="button">Account SignIn</button>
           </div>
           <form id="register-form" novalidate>
             <div class="form-grid">
@@ -214,12 +214,12 @@
       </section>
     </main>
   </div>
-  <a href="../index.html" style="position:fixed;right:20px;bottom:20px;z-index:1000;padding:11px 16px;border-radius:999px;background:#0b8457;color:#fff;font-weight:700;text-decoration:none;box-shadow:0 6px 18px #18332a30">Back to home</a>
+  <a href="../index.html" style="position:fixed;left:20px;bottom:20px;z-index:1000;padding:11px 16px;border-radius:999px;background:#0b8457;color:#fff;font-weight:700;text-decoration:none;box-shadow:0 6px 18px #18332a30">Back to home</a>
 
   <dialog id="auth-failure-dialog" class="auth-dialog" aria-labelledby="auth-failure-title" aria-describedby="auth-failure-message">
-    <h2 id="auth-failure-title">操作未完成</h2>
+    <h2 id="auth-failure-title">Action could not be completed</h2>
     <p id="auth-failure-message"></p>
-    <button id="auth-failure-close" class="primary" type="button">我知道了</button>
+    <button id="auth-failure-close" class="primary" type="button">Got it</button>
   </dialog>
 
   <script>
@@ -252,7 +252,7 @@
         registerView.hidden = !showingLogin;
         form.hidden = !showingLogin;
         document.querySelector(".device-control").hidden = !showingLogin;
-        modeSwitch.textContent = showingLogin ? "Already signed in with an account" : "Back to registration";
+        modeSwitch.textContent = showingLogin ? "Account SignIn" : "Back to registration";
         document.querySelector("#form-title").textContent = "Create your account";
         if (showingLogin) form.reset();
         else loginForm.elements.identifier.focus();
@@ -265,11 +265,11 @@
         const identifier = loginForm.elements.identifier.value.trim();
         const password = loginForm.elements.password.value;
         if (!identifier || !password) {
-          showFailure("登录失败：请填写邮箱或手机号和密码。");
+          showFailure("Login failed: Enter your email or phone number and password.");
           return;
         }
         loginForm.reset();
-        showFailure("登录失败：当前网站没有配置安全的服务端身份验证。为保护账号安全，输入内容不会发送、验证或保存。请勿使用真实密码。 ");
+        showFailure("Login failed: This website has no secure server-side authentication configured. To protect your account, the information you enter will not be sent, verified, or saved. Do not use a real password.");
       });
 
       form.addEventListener("submit", (event) => {
@@ -283,16 +283,16 @@
         const emailValid = !email || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
         const phoneValid = !phone || /^[+\d\s()-]{6,20}$/.test(phone);
 
-        if (!email && !phone) return showFailure("注册失败：请填写邮箱或手机号。");
-        if (!emailValid) return showFailure("注册失败：邮箱格式不正确。");
-        if (!phoneValid) return showFailure("注册失败：手机号格式不正确。");
-        if (!device) return showFailure("注册失败：请选择主要设备类型。");
-        if (!/^[A-Za-z0-9]{6,32}$/.test(password)) return showFailure("注册失败：密码须为 6–32 位英文字母或数字。演示页面不会保存密码，请勿使用真实密码。");
-        if (password !== confirmPassword) return showFailure("注册失败：两次输入的密码不一致。");
-        if (!data.get("consent")) return showFailure("注册失败：请先阅读并同意《用户服务协议》和《隐私政策》。");
+        if (!email && !phone) return showFailure("Registration failed: Enter your email address or phone number.");
+        if (!emailValid) return showFailure("Registration failed: The email address format is invalid.");
+        if (!phoneValid) return showFailure("Registration failed: The phone number format is invalid.");
+        if (!device) return showFailure("Registration failed: Select your primary device type.");
+        if (!/^[A-Za-z0-9]{6,32}$/.test(password)) return showFailure("Registration failed: The password must contain 6–32 English letters or numbers. This demo does not save passwords; do not use a real password.");
+        if (password !== confirmPassword) return showFailure("Registration failed: The passwords do not match.");
+        if (!data.get("consent")) return showFailure("Registration failed: Read and agree to the User Service Agreement and Privacy Policy first.");
 
         form.reset();
-        showFailure("注册失败：网站尚未接入安全的服务端账号系统，无法合法验证或创建账户。提交内容不会发送或保存；请勿使用真实个人资料或密码。");
+        showFailure("Registration failed: This website is not connected to a secure account service, so it cannot verify or create accounts. Your information will not be sent or saved. Do not use real personal information or passwords.");
       });
 
     })();

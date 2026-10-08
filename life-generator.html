@@ -45,7 +45,7 @@
       }
 
       .header-bottom-spacer {
-        height: 1rem;
+        height: 0;
       }
 
       .nav-row {
@@ -74,7 +74,8 @@
         display: flex;
         justify-content: space-evenly;
         align-items: center;
-        gap: 1rem;
+        gap: 0;
+        transform: translateX(-4ch);
       }
 
       .top-nav a {
@@ -83,6 +84,10 @@
         font-weight: 600;
         letter-spacing: 0.02em;
         transition: color 0.2s ease;
+      }
+
+      .top-nav a + a {
+        margin-left: -2ch;
       }
 
       .top-nav a:hover {
@@ -102,6 +107,7 @@
         color: #d91d1d;
         font-weight: 800;
         letter-spacing: 0.04em;
+        transform: translateX(-4ch);
       }
 
       .content-wrap {
@@ -128,7 +134,7 @@
 
       .prompt-input {
         width: 100%;
-        min-height: 455px;
+        min-height: 303px;
         resize: vertical;
         border: none;
         outline: none;
@@ -241,13 +247,27 @@
 
         .top-nav {
           width: 100%;
-          justify-content: space-between;
+          justify-content: flex-start;
           flex-wrap: wrap;
-          gap: 8px 10px;
+          gap: 4px 0;
+          transform: none;
+        }
+
+        .top-nav a {
+          font-size: 0.9rem;
+          white-space: nowrap;
+        }
+
+        .top-nav a + a {
+          margin-left: 0;
         }
 
         .banner-row {
           height: 60px;
+        }
+
+        .slogan {
+          font-size: 0.95rem;
         }
 
         .content-wrap {
@@ -269,7 +289,6 @@
         }
       }
     </style>
-    <link rel="stylesheet" href="assets/responsive.css">
   </head>
   <body class="font-sans">
     <div class="header-shell">
@@ -277,11 +296,10 @@
         <div class="header-top-spacer" aria-hidden="true"></div>
 
         <div class="nav-row">
-          <div class="logo-wrap">
+          <a class="logo-wrap" href="index.html" aria-label="Back to home">
             <img src="./ok012_a.png" alt="Logo" />
-          </div>
-          <nav class="top-nav" aria-label="主导航">
-            <a href="index.html">Home</a>
+          </a>
+          <nav class="top-nav" aria-label="Primary navigation">
             <a href="blog-generator.html">Blog</a>
             <a href="prompt-generator.html">Prompt</a>
             <a href="life-generator.html">Life</a>
@@ -291,7 +309,7 @@
         </div>
 
         <div class="banner-row">
-          <div class="slogan">Boost Quality of Life and Practice AI skills !</div>
+          <div class="slogan">Boost Quality of Life and Practice AI Skills!</div>
         </div>
 
         <div class="header-bottom-spacer" aria-hidden="true"></div>
@@ -318,14 +336,14 @@
         </div>
       </section>
 
-      <div class="action-bar" aria-label="生成结果操作栏">
+      <div class="action-bar" aria-label="Generated results actions">
         <div class="action-icons">
-          <button class="action-icon" type="button" aria-label="复制">⧉</button>
-          <button class="action-icon" type="button" aria-label="收藏">★</button>
-          <button class="action-icon" type="button" aria-label="重做">↺</button>
-          <button class="action-icon" type="button" aria-label="点赞">👍</button>
-          <button class="action-icon" type="button" aria-label="点踩">👎</button>
-          <button class="action-icon" type="button" aria-label="分享">⇪</button>
+          <button class="action-icon" type="button" aria-label="Copy">⧉</button>
+          <button class="action-icon" type="button" aria-label="Save">★</button>
+          <button class="action-icon" type="button" aria-label="Redo">↺</button>
+          <button class="action-icon" type="button" aria-label="Like">👍</button>
+          <button class="action-icon" type="button" aria-label="Dislike">👎</button>
+          <button class="action-icon" type="button" aria-label="Share">⇪</button>
         </div>
         <div class="note">Content is purely AI-generated and for reference only</div>
         <div style="height: 12px;"></div>
@@ -335,7 +353,7 @@
           <a href="pages/09..html" style="color: #2d6a4f; text-decoration: underline; font-family: 'Times New Roman', serif; font-size: 18px;">9. pages/09.md</a>
           <a href="pages/10.html" style="color: #2d6a4f; text-decoration: underline; font-family: 'Times New Roman', serif; font-size: 18px;">10. pages/10.md</a>
           <a href="pages/11.html" style="color: #2d6a4f; text-decoration: underline; font-family: 'Times New Roman', serif; font-size: 18px;">11. pages/11.md</a>
-          <a href="pages/" style="color: #2d6a4f; text-decoration: underline; font-family: 'Times New Roman', serif; font-size: 18px;">12. 更多…</a>
+          <a href="pages/" style="color: #2d6a4f; text-decoration: underline; font-family: 'Times New Roman', serif; font-size: 18px;">12. More…</a>
         </div>
       </div>
     </main>
