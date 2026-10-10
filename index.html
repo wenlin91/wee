@@ -2,7 +2,7 @@
 <html lang="en" translate="no">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="google" content="notranslate" />
   <title>AI Home — Sunlit Tree (Improved)</title>
   <style>:root{--tree-green:#0b8457;--bg-light:#E8F8F0;--fg:#0b2b22;--muted:#4b5563;--accent:var(--tree-green);--card:rgba(255,255,255,0.85);--font-sans:'Segoe UI',Arial,sans-serif}*{box-sizing:border-box;margin:0;padding:0}html,body{height:100%}body{font-family:var(--font-sans);background:linear-gradient(180deg,#e8fbeb 0%,#daf6e0 100%);color:var(--fg);-webkit-font-smoothing:antialiased;overflow:hidden}.page-pad{padding-left:6.25%;padding-right:6.25%}header.site-header{position:fixed;left:6.25%;right:6.25%;top:0;height:6.25rem;display:flex;flex-direction:column;z-index:50}.top-row{display:flex;align-items:center;justify-content:space-between;height:1.2rem;padding-top:0.8rem}.top-spacer{height:1rem}.logo{display:flex;align-items:center;gap:0.5rem}.logo img{height:88px;width:auto;border-radius:6px;transform:translateY(1rem);transition:transform .15s ease}nav.top-nav{display:flex;gap:calc(1.25rem + 3ch);align-items:center;transform:translateX(-10ch);transition:transform .15s ease}.nav-item{font-size:18px;color:var(--muted);font-weight:600;text-decoration:none}.banner{display:flex;align-items:center;justify-content:center;height:3rem}.slogan{font-family:var(--font-sans);font-size:28px;color:#c71a1a;font-weight:800;transform:translate(8ch,2rem);transition:transform .15s ease}.banner-gap{height:1rem}.main{display:flex;margin-top:6.25rem}.sidebar{width:20%;min-width:180px;padding-top:0.75rem;position:fixed;top:6.25rem;left:6.25%;bottom:0}.sidebar .section-title{color:#c71a1a;font-weight:700;margin-bottom:0.6rem}.sidebar .sidebar-item{display:block;padding:0.6rem 0.75rem;color:var(--muted);font-size:16px;border-radius:8px;cursor:pointer;background:transparent;border:none;text-align:left}.sidebar .sidebar-item.red{color:#c71a1a}.sidebar .sidebar-item.active{color:var(--accent);background:rgba(11,132,87,0.06)}.sidebar .sidebar-item[data-category="chat"]{margin-top:4rem}.content-wrap{margin-left:calc(6.25% + 20%);width:calc(73.75% - 12px);padding:1rem 0}.scroll-container{position:absolute;top:calc(6.25rem + 2rem);left:calc(6.25% + 20%);right:6.25%;bottom:0;overflow-y:auto;padding:1rem 2ch 1rem 0}.sticky-top{position:sticky;top:6.25rem;background:transparent;padding:0.5rem 0;color:#c71a1a;font-weight:700}.categories-row{position:fixed;top:calc(6.25rem + 1rem);left:6.25%;right:6.25%;height:3rem;display:flex;align-items:center;justify-content:center;padding:0 1rem;color:#c71a1a;font-weight:700;z-index:46;background:rgba(255,255,255,0.85);backdrop-filter:blur(6px);border-bottom:1px solid rgba(0,0,0,0.05)}.categories-row .categories-center{font-family:var(--font-sans);font-size:18px;color:#c71a1a;font-weight:700;transform:translateX(2ch);transition:transform .12s ease}.categories-spacer{height:3rem}.sidebar-title{font-family:var(--font-sans);font-size:16px;color:#c71a1a;font-weight:700;padding:0.5rem 0}#content-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem}.card{background:var(--card);border-radius:12px;overflow:hidden;box-shadow:0 6px 18px rgba(0,0,0,0.06);transition:transform .2s}.card:hover{transform:translateY(-6px)}.card img{width:100%;height:60px;object-fit:cover}.card .meta{padding:0.75rem}.grid-spacer{grid-column:1 / -1;height:32px;visibility:hidden}footer.site-footer{text-align:center;padding:2.5rem 0;color:var(--muted);margin-top:2rem}@media (max-width:1024px){.sidebar{position:relative;top:auto;left:auto;width:100%;min-width:0}.content-wrap{margin-left:0;width:100%}.page-pad{padding-left:1rem;padding-right:1rem}}</style>
@@ -37,6 +37,7 @@
   </style>
   <style>
     .banner-gap { height: 0; }
+    header.site-header { position: relative; left: auto; right: auto; top: auto; }
     @media (min-width: 701px) {
       nav.top-nav { gap: calc(1.25rem + 3ch); transform: translateX(-23ch); }
       .slogan { transform: translate(0ch, 2rem); }
@@ -55,6 +56,102 @@
       }
       .nav-item { font-size: 14px; text-align: center; white-space: nowrap; }
       .slogan { font-size: clamp(1rem, 4vw, 1.25rem); transform: translate(0ch, 2rem); }
+    }
+  </style>
+  <style>
+    @media (max-width: 1024px) {
+      .top-row {
+        height: auto;
+        min-height: 1.2rem;
+        gap: 0.75rem;
+      }
+
+      .logo img {
+        height: clamp(48px, 8vw, 72px);
+        transform: none;
+      }
+
+      nav.top-nav {
+        flex: 1 1 auto;
+        min-width: 0;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 0.5rem clamp(0.5rem, 2vw, 1rem);
+        transform: none;
+      }
+
+      .nav-item {
+        font-size: clamp(0.8rem, 1.7vw, 1rem);
+        white-space: nowrap;
+      }
+
+      .banner {
+        height: auto;
+        min-height: 3rem;
+        padding: 0.5rem 0;
+      }
+
+      .slogan {
+        max-width: 100%;
+        font-size: clamp(1rem, 3vw, 1.75rem);
+        text-align: center;
+        transform: none;
+      }
+    }
+
+    @media (max-width: 768px) {
+      header.site-header {
+        width: 100%;
+        padding: 0 1rem;
+      }
+
+      .top-row {
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        gap: 0.75rem;
+      }
+
+      .logo img {
+        height: clamp(44px, 12vw, 60px);
+      }
+
+      nav.top-nav {
+        flex: 1 1 100%;
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        gap: 4px clamp(12px, 4vw, 24px);
+      }
+
+      .nav-item {
+        font-size: clamp(0.8rem, 3vw, 0.95rem);
+        line-height: 1.4;
+        text-align: left;
+        white-space: nowrap;
+      }
+
+      .banner {
+        min-height: 2.5rem;
+      }
+
+      .slogan {
+        font-size: clamp(1rem, 4vw, 1.25rem);
+        transform: none;
+      }
+    }
+  </style>
+  <style>
+    .scroll-container img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .scroll-container .life-card img,
+    .scroll-container .work-card img,
+    .scroll-container .campus-card img,
+    .scroll-container #content-grid .card img {
+      height: auto;
     }
   </style>
 </head>
@@ -602,7 +699,7 @@
         </div>
 
         <div style="text-align:center;margin-top:2rem">
-          <a href="index.html" aria-label="Back to home"><img src="ok012_a.png" alt="Logo" style="display:block;height:96px;border-radius:6px;margin:0 auto 0.5rem auto;" onerror="this.src='https://picsum.photos/seed/logo/120/40'"></a>
+          <a href="index.html" aria-label="Back to home"><img src="ok012_a.png" alt="Logo" style="display:block;max-width:100%;height:auto;border-radius:6px;margin:0 auto 0.5rem auto;" onerror="this.src='https://picsum.photos/seed/logo/120/40'"></a>
           <div style="margin-top:0.5rem;color:var(--muted)">Follow me, save me, and easily step into the AI era !</div>
         </div>
 
